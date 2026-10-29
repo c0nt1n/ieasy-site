@@ -41,11 +41,15 @@ const points = [
           </pattern>
         </defs>
         <rect width="400" height="400" fill="url(#dots)"></rect>
-        {[70, 130, 190].map((r) => <circle cx="200" cy="200" r={r} fill="none" stroke="#808080" stroke-opacity="0.45" stroke-dasharray="3 6" />)}
-        {points.map((p) => <line x1="200" y1="200" x2={p.x} y2={p.y} stroke="#808080" stroke-opacity="0.5" />)}
+        {[70, 130, 190].map((r, i) => (
+          <circle class:list={['map-ring', i % 2 && 'map-ring-rev']} cx="200" cy="200" r={r} fill="none" stroke="#808080" stroke-opacity="0.45" stroke-dasharray="3 6" />
+        ))}
+        {points.map((p, i) => (
+          <line class="map-line" style={`--k:${i}`} pathLength="1" x1="200" y1="200" x2={p.x} y2={p.y} stroke="#808080" stroke-opacity="0.6" />
+        ))}
         {
-          points.map((p) => (
-            <g>
+          points.map((p, i) => (
+            <g class="map-pt" style={`--k:${i}`}>
               <circle cx={p.x} cy={p.y} r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
               <circle cx={p.x} cy={p.y} r="3.5" fill="#000" />
               <text x={p.lx} y={p.ly} text-anchor={p.anchor} font-size="14" font-family="Inter Variable, sans-serif" fill="#1A1A1A">{p.name}</text>
@@ -76,6 +80,44 @@ const points = [
         transform: scale(2.2);
         opacity: 0;
       }
+    }
+
+    /* anéis girando devagar, como um radar */
+    .map-ring {
+      transform-origin: 200px 200px;
+      animation: spin 80s linear infinite;
+    }
+    .map-ring-rev {
+      animation-direction: reverse;
+      animation-duration: 120s;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ao aparecer: linhas saem de Alphaville e os pontos surgem em sequência */
+    :global(.js) .map-line {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 0.9s var(--ease-out-soft) calc(var(--k) * 0.12s + 0.3s);
+    }
+    :global(.js) .map-pt {
+      opacity: 0;
+      transform: scale(0.4);
+      transform-box: fill-box;
+      transform-origin: center;
+      transition:
+        opacity 0.5s ease-out calc(var(--k) * 0.12s + 0.8s),
+        transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--k) * 0.12s + 0.8s);
+    }
+    :global(.in) .map-line {
+      stroke-dashoffset: 0;
+    }
+    :global(.in) .map-pt {
+      opacity: 1;
+      transform: none;
     }
   }
 </style>

@@ -33,6 +33,7 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <title>{site.title}</title>
     <meta name="description" content={site.description} />
     <link rel="canonical" href={canonical} />
@@ -65,5 +66,28 @@ const jsonLd = {
       Pular para o conteúdo
     </a>
     <slot />
+
+    <script>
+      // Revela os elementos .reveal quando entram na tela. Os que entram juntos aparecem em cascata.
+      const items = document.querySelectorAll<HTMLElement>('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            let i = 0;
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              const el = e.target as HTMLElement;
+              el.style.setProperty('--d', `${Math.min(i++, 6) * 0.08}s`);
+              el.classList.add('in');
+              io.unobserve(el);
+            }
+          },
+          { rootMargin: '0px 0px -6% 0px', threshold: 0.08 },
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('in'));
+      }
+    </script>
   </body>
 </html>
