@@ -188,7 +188,26 @@ export const products: Product[] = [
     ],
     inBox: iPhoneBox,
   },
-  { name: 'iPhone 17e', category: 'iphone', description: 'A porta de entrada para a linha 17.', image: '', featured: false, inBox: iPhoneBox },
+  {
+    name: 'iPhone 17e',
+    category: 'iphone',
+    description: 'A porta de entrada para a linha 17.',
+    image: '',
+    featured: false,
+    colors: [
+      { name: 'Branco', hex: '#f4f4f1', image: 'iphone-17e-branco.webp' },
+      { name: 'Rosa-pálido', hex: '#f6d6dc', image: 'iphone-17e-rosa-palido.webp' },
+      { name: 'Preto', hex: '#3a3b3a', image: 'iphone-17e-preto.webp' },
+    ],
+    capacities: ['256 GB', '512 GB'],
+    specs: [
+      { label: 'Tela', value: '6,1" Super Retina XDR' },
+      { label: 'Chip', value: 'A19' },
+      { label: 'Câmera', value: '48 MP' },
+      { label: 'Câmera frontal', value: '12 MP' },
+    ],
+    inBox: iPhoneBox,
+  },
   {
     name: 'iPhone 16',
     category: 'iphone',
