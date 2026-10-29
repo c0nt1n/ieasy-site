@@ -63,7 +63,7 @@ export const products: Product[] = [
     description: 'A maior tela da linha Pro, para quem quer o máximo.',
     image: '',
     featured: true,
-    colors: colors18Pro,
+    colors: colors18Pro.map((c) => (c.name === 'Bordô' ? { ...c, image: 'iphone-18-pro-max-bordo.webp' } : c)),
     specs: [{ label: 'Chip', value: 'A20 Pro' }],
     inBox: iPhoneBox,
   },

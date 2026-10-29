@@ -1,5 +1,6 @@
 ---
 // Foto otimizada (AVIF/WebP) a partir de src/assets/produtos/, ou espaço reservado se não houver foto.
+// As fotos devem ser quadradas, com o produto centralizado e margem em volta: elas preenchem o quadro inteiro.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import DeviceGlyph from './DeviceGlyph.astro';
@@ -26,11 +27,11 @@ if (file && !match) console.warn(`[iEasy] Imagem não encontrada: src/assets/pro
         src={match.default}
         alt={alt}
         formats={['avif', 'webp']}
-        widths={[320, 480, 720]}
+        widths={[320, 480, 720, 1080]}
         sizes={sizes}
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"
-        class="h-full w-full object-contain p-6"
+        class="h-full w-full object-cover"
       />
     ) : (
       <div class="dot-grid absolute inset-0 grid place-items-center">

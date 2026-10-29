@@ -72,7 +72,7 @@ const perks = ['Original e lacrado', 'Pix ou até 10x sem juros', 'Seu usado na 
             {
               frames.map((f, i) => (
                 <div data-frame={f.color} class="pd-frame" hidden={i > 0}>
-                  <ProductImage file={f.file} alt={f.color ? `${p.name} na cor ${f.color}` : p.name} category={p.category} class="aspect-[5/4] lg:aspect-square" sizes="(min-width: 1024px) 560px, 100vw" eager={i === 0} />
+                  <ProductImage file={f.file} alt={f.color ? `${p.name} na cor ${f.color}` : p.name} category={p.category} class={hasPhoto ? 'aspect-square' : 'aspect-[5/4] lg:aspect-square'} sizes="(min-width: 1024px) 560px, 100vw" eager={i === 0} />
                 </div>
               ))
             }
