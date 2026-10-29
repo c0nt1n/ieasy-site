@@ -35,7 +35,7 @@ export interface Product {
 // Cores compartilhadas entre modelos da mesma geração
 const colors18Pro: Color[] = [
   { name: 'Bordô', hex: '#5b2230' },
-  { name: 'Glacial', hex: '#d6e3ee' },
+  { name: 'Glacial', hex: '#a9bed8' },
   { name: 'Prateado', hex: '#e3e4e6' },
   { name: 'Preto', hex: '#3a3a3c' },
 ];
@@ -45,6 +45,11 @@ const colors17Pro: Color[] = [
   { name: 'Prateado', hex: '#e3e4e6' },
 ];
 const iPhoneBox = ['iPhone', 'Cabo USB-C', 'Documentação'];
+
+/** Liga cada cor à sua foto: withImages(cores, { 'Nome da cor': 'arquivo.webp' }). */
+function withImages(colors: Color[], images: Record<string, string>): Color[] {
+  return colors.map((c) => (images[c.name] ? { ...c, image: images[c.name] } : c));
+}
 
 export const categories: { id: Category; name: string; tagline: string }[] = [
   { id: 'iphone', name: 'iPhone', tagline: 'Da linha Pro ao primeiro dobrável.' },
@@ -63,7 +68,7 @@ export const products: Product[] = [
     description: 'A maior tela da linha Pro, para quem quer o máximo.',
     image: '',
     featured: true,
-    colors: colors18Pro.map((c) => (c.name === 'Bordô' ? { ...c, image: 'iphone-18-pro-max-bordo.webp' } : c)),
+    colors: withImages(colors18Pro, { Bordô: 'iphone-18-pro-max-bordo.webp', Glacial: 'iphone-18-pro-max-glacial.webp' }),
     specs: [{ label: 'Chip', value: 'A20 Pro' }],
     inBox: iPhoneBox,
   },
