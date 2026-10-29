@@ -121,7 +121,7 @@ const perks = ['Original e lacrado', 'Pix ou até 10x sem juros', 'Seu usado na 
                 <fieldset>
                   <legend class="text-lg font-semibold text-ink">{capLabel}</legend>
                   {caps.length > 0 ? (
-                    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    <div class:list={['mt-4 grid grid-cols-2 gap-3', caps.length === 4 ? 'sm:grid-cols-4' : 'sm:grid-cols-3']}>
                       {caps.map((cap, i) => (
                         <label class="cursor-pointer rounded-2xl bg-paper px-4 py-4 ring-1 ring-ink/[0.12] transition-[box-shadow,background-color] duration-300 hover:bg-mist has-checked:ring-2 has-checked:ring-ink has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink">
                           <input type="radio" name="capacidade" value={cap} checked={i === 0} class="sr-only" />

@@ -44,7 +44,7 @@ const colors17Pro: Color[] = [
   { name: 'Azul-intenso', hex: '#2f3c58' },
   { name: 'Prateado', hex: '#e3e4e6' },
 ];
-const iPhoneBox = ['iPhone', 'Cabo USB-C', 'Documentação'];
+const iPhoneBox = ['iPhone', 'Cabo USB-C'];
 
 /** Liga cada cor à sua foto: withImages(cores, { 'Nome da cor': 'arquivo.webp' }). */
 function withImages(colors: Color[], images: Record<string, string>): Color[] {
@@ -68,8 +68,19 @@ export const products: Product[] = [
     description: 'A maior tela da linha Pro, para quem quer o máximo.',
     image: '',
     featured: true,
-    colors: withImages(colors18Pro, { Bordô: 'iphone-18-pro-max-bordo.webp', Glacial: 'iphone-18-pro-max-glacial.webp' }),
-    specs: [{ label: 'Chip', value: 'A20 Pro' }],
+    colors: withImages(colors18Pro, {
+      Bordô: 'iphone-18-pro-max-bordo.webp',
+      Glacial: 'iphone-18-pro-max-glacial.webp',
+      Prateado: 'iphone-18-pro-max-prateado.webp',
+      Preto: 'iphone-18-pro-max-preto.webp',
+    }),
+    capacities: ['256 GB', '512 GB', '1 TB', '2 TB'],
+    specs: [
+      { label: 'Tela', value: '6,9" Super Retina XDR, ProMotion até 120 Hz' },
+      { label: 'Chip', value: 'A20 Pro (2 nm)' },
+      { label: 'Câmeras', value: 'Três de 48 MP, principal com abertura variável' },
+      { label: 'Câmera frontal', value: '18 MP com Center Stage' },
+    ],
     inBox: iPhoneBox,
   },
   {
@@ -78,8 +89,19 @@ export const products: Product[] = [
     description: 'Recursos Pro em um tamanho mais compacto.',
     image: '',
     featured: true,
-    colors: colors18Pro,
-    specs: [{ label: 'Chip', value: 'A20 Pro' }],
+    colors: withImages(colors18Pro, {
+      Bordô: 'iphone-18-pro-bordo.webp',
+      Glacial: 'iphone-18-pro-glacial.webp',
+      Prateado: 'iphone-18-pro-prateado.webp',
+      Preto: 'iphone-18-pro-preto.webp',
+    }),
+    capacities: ['256 GB', '512 GB', '1 TB', '2 TB'],
+    specs: [
+      { label: 'Tela', value: '6,3" Super Retina XDR, ProMotion até 120 Hz' },
+      { label: 'Chip', value: 'A20 Pro (2 nm)' },
+      { label: 'Câmeras', value: 'Três de 48 MP, principal com abertura variável' },
+      { label: 'Câmera frontal', value: '18 MP com Center Stage' },
+    ],
     inBox: iPhoneBox,
   },
   { name: 'iPhone Duo', category: 'iphone', description: 'O primeiro iPhone dobrável: 7,6" aberto e 5,4" fechado.', image: '', featured: true },
