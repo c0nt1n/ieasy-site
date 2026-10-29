@@ -111,7 +111,11 @@ export const products: Product[] = [
     description: 'Tela grande e câmeras Pro da geração 17.',
     image: '',
     featured: false,
-    colors: colors17Pro,
+    colors: withImages(colors17Pro, {
+      'Laranja-cósmico': 'iphone-17-pro-max-laranja-cosmico.webp',
+      'Azul-intenso': 'iphone-17-pro-max-azul-intenso.webp',
+      Prateado: 'iphone-17-pro-max-prateado.webp',
+    }),
     capacities: ['256 GB', '512 GB', '1 TB', '2 TB'],
     specs: [
       { label: 'Tela', value: '6,9", ProMotion até 120 Hz' },
@@ -127,7 +131,11 @@ export const products: Product[] = [
     description: 'Desempenho Pro com ótimo equilíbrio de tamanho.',
     image: '',
     featured: false,
-    colors: colors17Pro,
+    colors: withImages(colors17Pro, {
+      'Laranja-cósmico': 'iphone-17-pro-laranja-cosmico.webp',
+      'Azul-intenso': 'iphone-17-pro-azul-intenso.webp',
+      Prateado: 'iphone-17-pro-prateado.webp',
+    }),
     capacities: ['256 GB', '512 GB', '1 TB'],
     specs: [
       { label: 'Tela', value: '6,3", ProMotion até 120 Hz' },
