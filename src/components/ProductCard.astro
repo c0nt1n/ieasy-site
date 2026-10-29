@@ -1,0 +1,38 @@
+---
+// Card de produto: leva para a página do produto, onde a pessoa escolhe cor e capacidade.
+import Icon from './Icon.astro';
+import ProductImage from './ProductImage.astro';
+import { productPath, type Product } from '../data/products';
+
+interface Props {
+  product: Product;
+  heading?: 'h3' | 'h4';
+}
+const { product: p, heading: Heading = 'h4' } = Astro.props;
+---
+<a
+  href={productPath(p)}
+  class="tilt group flex h-full flex-col overflow-hidden rounded-3xl bg-paper ring-1 ring-ink/[0.08] hover:shadow-[0_24px_50px_-28px_rgb(0_0_0/0.35)]"
+>
+  <div class="relative">
+    <ProductImage file={p.colors?.find((c) => c.image)?.image ?? p.image} alt={p.name} category={p.category} class="aspect-square" />
+    {p.featured && <span class="glass absolute top-3 left-3 rounded-full px-2.5 py-1 text-[0.6875rem] font-medium text-ink ring-1 ring-ink/[0.06]">Destaque</span>}
+  </div>
+  <div class="flex flex-1 flex-col p-3.5 sm:p-5">
+    <Heading class="font-display text-[0.9375rem] leading-snug font-semibold tracking-tight text-ink sm:text-lg">{p.name}</Heading>
+    <p class="mt-1 flex-1 text-[0.8125rem] leading-snug text-graphite sm:text-sm">{p.description}</p>
+    {
+      p.colors && (
+        <span class="mt-3 flex flex-wrap gap-1.5" aria-label={`${p.colors.length} cores`}>
+          {p.colors.map((c) => (
+            <span class="size-3.5 rounded-full ring-1 ring-ink/20 ring-inset" style={`background:${c.hex}`} title={c.name} />
+          ))}
+        </span>
+      )
+    }
+    <span class="btn btn-primary mt-4 min-h-11 w-full px-3 text-sm">
+      Ver detalhes
+      <Icon name="arrow" class="btn-arrow size-4" />
+    </span>
+  </div>
+</a>

@@ -57,9 +57,17 @@ export function waGeneral(extra = '') {
   return base + encodeURIComponent(`Oi! Vim pelo site e tenho interesse em: ${extra}`);
 }
 
+/** Endereço do WhatsApp sem a mensagem (a página do produto monta a mensagem conforme a escolha). */
+export const waBase = base;
+
+/** Mensagem para um produto. `detail` vai entre parênteses, ex.: "Lavanda, 256 GB". */
+export function waProductMessage(productName: string, detail = '') {
+  return `Oi! Vim pelo site e tenho interesse no ${productName}${detail ? ` (${detail})` : ''}`;
+}
+
 /** Link do WhatsApp para um produto específico. */
-export function waProduct(productName: string) {
-  return base + encodeURIComponent(`Oi! Vim pelo site e tenho interesse no ${productName}`);
+export function waProduct(productName: string, detail = '') {
+  return base + encodeURIComponent(waProductMessage(productName, detail));
 }
 
 /** Link para avaliação do iPhone usado. */

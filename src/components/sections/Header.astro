@@ -3,19 +3,22 @@ import Logo from '../Logo.astro';
 import Icon from '../Icon.astro';
 import { waGeneral } from '../../data/site';
 
+// Links absolutos para a página inicial: funcionam também nas páginas de produto.
+const home = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+
 const links = [
-  { href: '#produtos', label: 'Produtos' },
-  { href: '#como-comprar', label: 'Como comprar' },
-  { href: '#troca', label: 'Troca' },
-  { href: '#seguranca', label: 'Segurança' },
-  { href: '#quem-somos', label: 'Quem somos' },
-  { href: '#entrega', label: 'Entrega' },
-  { href: '#duvidas', label: 'Dúvidas' },
+  { href: home + '#produtos', label: 'Produtos' },
+  { href: home + '#como-comprar', label: 'Como comprar' },
+  { href: home + '#troca', label: 'Troca' },
+  { href: home + '#seguranca', label: 'Segurança' },
+  { href: home + '#quem-somos', label: 'Quem somos' },
+  { href: home + '#entrega', label: 'Entrega' },
+  { href: home + '#duvidas', label: 'Dúvidas' },
 ];
 ---
 <header id="topo" class="header-in glass fixed inset-x-0 top-0 z-50 border-b border-ink/[0.06] transition-shadow duration-300 data-[scrolled]:shadow-[0_8px_30px_-18px_rgb(0_0_0/0.35)]">
   <div class="container-x flex h-16 items-center justify-between gap-6">
-    <a href="#" class="-m-2 shrink-0 p-2" aria-label="iEasy, voltar ao início">
+    <a href={home} class="-m-2 shrink-0 p-2" aria-label="iEasy, voltar ao início">
       <Logo class="h-8 w-auto text-ink sm:h-8" title="iEasy" />
     </a>
 

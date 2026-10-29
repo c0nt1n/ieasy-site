@@ -1,9 +1,9 @@
 ---
 import Icon from '../Icon.astro';
 import DeviceGlyph from '../DeviceGlyph.astro';
-import ProductImage from '../ProductImage.astro';
+import ProductCard from '../ProductCard.astro';
 import { categories, productsBy, type Category } from '../../data/products';
-import { waGeneral, waProduct } from '../../data/site';
+import { waGeneral } from '../../data/site';
 
 // Posição de cada linha na grade bento (desktop: 4 colunas)
 const bento: Record<Category, string> = {
@@ -21,7 +21,7 @@ const bento: Record<Category, string> = {
       <p class="eyebrow">Produtos</p>
       <h2 id="produtos-title" class="section-title mt-4">Escolha o seu. A gente cuida do resto.</h2>
       <p class="lead mt-5">
-        Todos originais e lacrados. Consulte cores, capacidades e disponibilidade direto no WhatsApp.
+        Todos originais e lacrados. Veja as cores e capacidades de cada modelo e confirme a disponibilidade no WhatsApp.
       </p>
     </div>
 
@@ -93,28 +93,7 @@ const bento: Record<Category, string> = {
             <ul class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
               {productsBy(c.id).map((p) => (
                 <li class="reveal">
-                  <article class="tilt group flex h-full flex-col overflow-hidden rounded-3xl bg-paper ring-1 ring-ink/[0.08] hover:shadow-[0_24px_50px_-28px_rgb(0_0_0/0.35)]">
-                    <div class="relative">
-                      <ProductImage file={p.image} alt={p.name} category={p.category} class="aspect-square" />
-                      {p.featured && (
-                        <span class="glass absolute top-3 left-3 rounded-full px-2.5 py-1 text-[0.6875rem] font-medium text-ink ring-1 ring-ink/[0.06]">Destaque</span>
-                      )}
-                    </div>
-                    <div class="flex flex-1 flex-col p-3.5 sm:p-5">
-                      <h4 class="font-display text-[0.9375rem] leading-snug font-semibold tracking-tight text-ink sm:text-lg">{p.name}</h4>
-                      <p class="mt-1 flex-1 text-[0.8125rem] leading-snug text-graphite sm:text-sm">{p.description}</p>
-                      <a
-                        href={waProduct(p.name)}
-                        target="_blank"
-                        rel="noopener"
-                        class="btn btn-primary mt-4 min-h-11 w-full px-3 text-sm"
-                        aria-label={`Tenho interesse no ${p.name} (abre o WhatsApp)`}
-                      >
-                        <Icon name="whatsapp" class="hidden size-4 sm:block" />
-                        Tenho interesse
-                      </a>
-                    </div>
-                  </article>
+                  <ProductCard product={p} />
                 </li>
               ))}
             </ul>

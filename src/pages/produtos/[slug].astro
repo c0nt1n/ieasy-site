@@ -1,0 +1,263 @@
+---
+// Página de cada produto: a pessoa escolhe cor e capacidade e chama no WhatsApp com a escolha pronta.
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/sections/Header.astro';
+import Footer from '../../components/sections/Footer.astro';
+import FloatingWhatsApp from '../../components/sections/FloatingWhatsApp.astro';
+import Icon from '../../components/Icon.astro';
+import Pending from '../../components/Pending.astro';
+import ProductImage from '../../components/ProductImage.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { categories, products, productsBy, slug, type Category, type Product } from '../../data/products';
+import { site, waBase, waProduct, waProductMessage } from '../../data/site';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: slug(p.name) }, props: { product: p } }));
+}
+
+const { product: p } = Astro.props as { product: Product };
+const category = categories.find((c) => c.id === p.category)!;
+const related = productsBy(p.category).filter((o) => o !== p).slice(0, 4);
+
+// Rótulo da escolha de capacidade por linha (AirPods e acessórios não têm)
+const capacityLabel: Record<Category, string | null> = {
+  iphone: 'Armazenamento',
+  ipad: 'Armazenamento',
+  macbook: 'Configuração',
+  watch: 'Tamanho',
+  airpods: null,
+  acessorios: null,
+};
+const capLabel = capacityLabel[p.category];
+
+const colors = p.colors ?? [];
+const caps = p.capacities ?? [];
+const detail = [colors[0]?.name, caps[0]].filter(Boolean).join(', ');
+
+// Uma imagem por cor quando houver fotos; senão, um único espaço reservado
+const frames = colors.some((c) => c.image) ? colors.map((c) => ({ color: c.name, file: c.image ?? p.image })) : [{ color: '', file: p.image }];
+const hasPhoto = frames.some((f) => f.file);
+
+const home = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Início', item: new URL(home, Astro.site).toString() },
+    { '@type': 'ListItem', position: 2, name: category.name, item: new URL(`${home}#linha-${p.category}`, Astro.site).toString() },
+    { '@type': 'ListItem', position: 3, name: p.name },
+  ],
+};
+
+const perks = ['Original e lacrado', 'Pix ou até 10x sem juros', 'Seu usado na troca', 'Entrega em mãos'];
+---
+<Layout title={`${p.name} | iEasy`} description={`${p.name} original e lacrado. ${p.description} Veja cores e capacidades e fale com a iEasy no WhatsApp. Entrega em Alphaville, região e São Paulo.`}>
+  <Header />
+  <main id="conteudo" class="pt-16">
+    <div class="container-x pt-6 pb-20 sm:pt-10 sm:pb-28" data-product data-wa={waBase} data-msg={waProductMessage(p.name)}>
+      <nav aria-label="Você está em" class="text-sm text-graphite">
+        <ol class="flex flex-wrap items-center gap-1.5">
+          <li><a href={home} class="hover:text-ink hover:underline">Início</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href={`${home}#linha-${p.category}`} class="hover:text-ink hover:underline">{category.name}</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="font-medium text-ink">{p.name}</li>
+        </ol>
+      </nav>
+
+      <div class="mt-6 grid gap-8 lg:mt-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+        <!-- Foto -->
+        <div class="reveal lg:sticky lg:top-24 lg:self-start">
+          <div class="relative overflow-hidden rounded-[32px] bg-mist">
+            {
+              frames.map((f, i) => (
+                <div data-frame={f.color} class="pd-frame" hidden={i > 0}>
+                  <ProductImage file={f.file} alt={f.color ? `${p.name} na cor ${f.color}` : p.name} category={p.category} class="aspect-[5/4] lg:aspect-square" sizes="(min-width: 1024px) 560px, 100vw" eager={i === 0} />
+                </div>
+              ))
+            }
+            {
+              colors.length > 0 && (
+                <span class="glass absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full py-1.5 pr-3.5 pl-1.5 text-sm font-medium text-ink ring-1 ring-ink/[0.06]">
+                  <span class="size-6 rounded-full ring-1 ring-ink/20 ring-inset" style={`background:${colors[0].hex}`} data-color-dot />
+                  <span data-color-label>{colors[0].name}</span>
+                </span>
+              )
+            }
+          </div>
+          {hasPhoto && <p class="mt-3 text-center text-xs text-graphite">Imagens ilustrativas.</p>}
+        </div>
+
+        <!-- Escolhas -->
+        <div class="reveal">
+          <p class="eyebrow">{category.name}{p.featured && ' · Destaque'}</p>
+          <h1 class="mt-3 text-[2.5rem] leading-[1.05] font-semibold sm:text-6xl">{p.name}</h1>
+          <p class="lead mt-4">{p.description}</p>
+
+          <div class="mt-8 space-y-8 border-t border-ink/[0.08] pt-8">
+            <fieldset>
+              <legend class="text-lg font-semibold text-ink">
+                Cor{colors.length > 0 && <span class="font-normal text-graphite"> · <span data-color-name>{colors[0].name}</span></span>}
+              </legend>
+              {
+                colors.length > 0 ? (
+                  <div class="mt-4 flex flex-wrap gap-3">
+                    {colors.map((c, i) => (
+                      <label class="grid size-12 cursor-pointer place-items-center rounded-full ring-ink/80 ring-offset-2 transition-shadow has-checked:ring-2 has-focus-visible:outline-2 has-focus-visible:outline-offset-4 has-focus-visible:outline-ink">
+                        <input type="radio" name="cor" value={c.name} data-hex={c.hex} checked={i === 0} class="sr-only" />
+                        <span class="size-10 rounded-full ring-1 ring-ink/20 ring-inset transition-transform duration-300 ease-out-soft hover:scale-105" style={`background:${c.hex}`} />
+                        <span class="sr-only">{c.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <p class="mt-3"><Pending label="cores disponíveis" /></p>
+                )
+              }
+            </fieldset>
+
+            {
+              capLabel && (
+                <fieldset>
+                  <legend class="text-lg font-semibold text-ink">{capLabel}</legend>
+                  {caps.length > 0 ? (
+                    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      {caps.map((cap, i) => (
+                        <label class="cursor-pointer rounded-2xl bg-paper px-4 py-4 ring-1 ring-ink/[0.12] transition-[box-shadow,background-color] duration-300 hover:bg-mist has-checked:ring-2 has-checked:ring-ink has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink">
+                          <input type="radio" name="capacidade" value={cap} checked={i === 0} class="sr-only" />
+                          <span class="font-display text-xl font-semibold tracking-tight text-ink">{cap}</span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <p class="mt-3"><Pending label={capLabel.toLowerCase()} /></p>
+                  )}
+                </fieldset>
+              )
+            }
+
+            <!-- Chamada para o WhatsApp com a escolha -->
+            <div class="rounded-[28px] bg-mist p-5 sm:p-6">
+              {detail && (
+                <p class="text-sm text-graphite">
+                  Sua escolha: <strong class="font-semibold text-ink" data-summary>{p.name} · {detail.replace(', ', ' · ')}</strong>
+                </p>
+              )}
+              <a href={waProduct(p.name, detail)} target="_blank" rel="noopener" class="btn btn-primary mt-4 min-h-14 w-full text-base first:mt-0" data-cta>
+                <Icon name="whatsapp" class="size-5" />
+                Quero esse pelo WhatsApp
+              </a>
+              <p class="mt-3 text-center text-[0.8125rem] leading-snug text-graphite">Confirmamos cor, capacidade e disponibilidade antes de fechar.</p>
+            </div>
+
+            <ul class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm text-graphite">
+              {perks.map((t) => (
+                <li class="flex items-center gap-2">
+                  <Icon name="check" class="size-4 shrink-0 text-ink" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+
+            {
+              p.specs && (
+                <section aria-labelledby="ficha-title">
+                  <h2 id="ficha-title" class="text-lg font-semibold">Ficha técnica</h2>
+                  <dl class="mt-4 grid gap-3 sm:grid-cols-2">
+                    {p.specs.map((s) => (
+                      <div class="rounded-2xl bg-mist px-4 py-3.5">
+                        <dt class="text-xs font-medium tracking-wide text-graphite uppercase">{s.label}</dt>
+                        <dd class="mt-1 font-semibold text-ink">{s.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              )
+            }
+
+            {
+              p.inBox && (
+                <section aria-labelledby="caixa-title">
+                  <h2 id="caixa-title" class="flex items-center gap-2 text-lg font-semibold">
+                    <Icon name="package" class="size-5" />
+                    Na caixa
+                  </h2>
+                  <ul class="mt-4 flex flex-wrap gap-2">
+                    {p.inBox.map((item) => (
+                      <li class="rounded-full bg-paper px-3.5 py-1.5 text-sm text-ink ring-1 ring-ink/[0.1]">{item}</li>
+                    ))}
+                  </ul>
+                </section>
+              )
+            }
+          </div>
+        </div>
+      </div>
+
+      {
+        related.length > 0 && (
+          <section class="mt-24 sm:mt-32" aria-labelledby="outros-title">
+            <div class="reveal flex flex-wrap items-end justify-between gap-4 border-b border-ink/[0.08] pb-5">
+              <h2 id="outros-title" class="text-2xl font-semibold sm:text-3xl">Outros modelos de {category.name}</h2>
+              <a href={`${home}#linha-${p.category}`} class="group inline-flex items-center gap-1.5 text-sm font-medium text-ink underline-offset-4 hover:underline">
+                Ver todos
+                <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            </div>
+            <ul class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
+              {related.map((o) => (
+                <li class="reveal">
+                  <ProductCard product={o} heading="h3" />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+  </main>
+  <Footer />
+  <FloatingWhatsApp />
+</Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+
+<script>
+  // Atualiza nome da cor, foto, resumo e link do WhatsApp conforme a escolha.
+  const root = document.querySelector<HTMLElement>('[data-product]')!;
+  const cta = root.querySelector<HTMLAnchorElement>('[data-cta]')!;
+  const name = root.querySelector('h1')!.textContent!.trim();
+
+  const update = () => {
+    const color = root.querySelector<HTMLInputElement>('input[name="cor"]:checked');
+    const cap = root.querySelector<HTMLInputElement>('input[name="capacidade"]:checked');
+    const parts = [color?.value, cap?.value].filter(Boolean) as string[];
+
+    if (color) {
+      root.querySelectorAll('[data-color-name], [data-color-label]').forEach((el) => (el.textContent = color.value));
+      root.querySelector<HTMLElement>('[data-color-dot]')?.style.setProperty('background', color.dataset.hex!);
+      const frames = root.querySelectorAll<HTMLElement>('[data-frame]');
+      if (frames.length > 1) frames.forEach((f) => (f.hidden = f.dataset.frame !== color.value));
+    }
+    const summary = root.querySelector('[data-summary]');
+    if (summary) summary.textContent = [name, ...parts].join(' · ');
+    // Mesmo formato de waProductMessage: "… no Produto (Cor, Capacidade)"
+    cta.href = root.dataset.wa + encodeURIComponent(root.dataset.msg + (parts.length ? ` (${parts.join(', ')})` : ''));
+  };
+  root.addEventListener('change', update);
+</script>
+
+<style>
+  /* Troca suave de foto ao mudar a cor */
+  @media (prefers-reduced-motion: no-preference) {
+    .pd-frame:not([hidden]) {
+      animation: pd-frame 0.5s var(--ease-out-soft);
+    }
+    @keyframes pd-frame {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+    }
+  }
+</style>
