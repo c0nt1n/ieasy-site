@@ -43,6 +43,10 @@ São gerados automaticamente a partir do número em `site.ts`:
 - Botões gerais: "Oi! Vim pelo site e tenho interesse em: "
 - Botão de cada produto: "Oi! Vim pelo site e tenho interesse no (nome do produto)"
 
+## Prévia no GitHub Pages
+
+Cada envio para a branch `main` publica o site automaticamente em **https://c0nt1n.github.io/ieasy-site/** (workflow em `.github/workflows/deploy.yml`). Use esse link para aprovações; para o domínio definitivo, siga a Cloudflare abaixo.
+
 ## Publicar na Cloudflare Pages (grátis)
 
 1. Crie um repositório no GitHub e envie esta pasta (o `.gitignore` já exclui `node_modules` e `dist`).
