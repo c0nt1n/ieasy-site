@@ -2,11 +2,10 @@
 
 export const site = {
   name: 'iEasy',
-  formerName: 'JLC Store',
   // O domínio do site fica em astro.config.mjs (SITE_URL).
   title: 'iEasy | iPhone e produtos Apple originais com entrega em Alphaville',
   description:
-    'Produtos Apple originais e lacrados com entrega em Alphaville, Tamboré, Barueri, Santana de Parnaíba, Aldeia da Serra e Osasco. Pix ou até 10x sem juros e seu iPhone usado na troca. Atendimento pelo WhatsApp.',
+    'Produtos Apple originais e lacrados com entrega em Alphaville, Tamboré, Barueri, Santana de Parnaíba, Aldeia da Serra, Osasco e São Paulo. Pix ou até 10x sem juros e seu iPhone usado na troca. Atendimento todos os dias pelo WhatsApp.',
 
   whatsapp: {
     number: '5555991388746',
@@ -16,11 +15,11 @@ export const site = {
   // [PREENCHER] Dados da empresa
   legalName: '', // razão social
   cnpj: '',
-  instagram: '', // ex.: 'https://www.instagram.com/ieasy'
-  instagramHandle: '', // ex.: '@ieasy'
-  hoursText: '', // ex.: 'Seg. a sáb., das 9h às 19h'
-  // Formato schema.org, ex.: ['Mo-Fr 09:00-19:00', 'Sa 09:00-14:00']
-  openingHours: [] as string[],
+  instagram: 'https://www.instagram.com/ieasy.oficial/',
+  instagramHandle: '@ieasy.oficial',
+  hoursText: 'Todos os dias, das 8h30 às 22h30',
+  // Formato schema.org (usado pelo Google)
+  openingHours: ['Mo-Su 08:30-22:30'],
   warranty: '', // ex.: '90 dias de garantia da loja, além da garantia do fabricante quando aplicável'
 
   // [PREENCHER] Quem atende
@@ -41,8 +40,15 @@ export const site = {
     'Santana de Parnaíba',
     'Aldeia da Serra',
     'Osasco',
+    'São Paulo (capital)',
   ],
 };
+
+/** Horário em minúsculas, para usar no meio de frases: "todos os dias, das 8h30 às 22h30". */
+export const hoursInline = site.hoursText.charAt(0).toLowerCase() + site.hoursText.slice(1);
+
+/** Lista das áreas em texto corrido: "A, B e C". */
+export const areasText = site.areas.slice(0, -1).join(', ') + ' e ' + site.areas[site.areas.length - 1];
 
 const base = `https://wa.me/${site.whatsapp.number}?text=`;
 

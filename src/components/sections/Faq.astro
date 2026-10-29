@@ -1,8 +1,6 @@
 ---
 import Icon from '../Icon.astro';
-import { site, waGeneral } from '../../data/site';
-
-const areas = 'Alphaville (Barueri e Santana de Parnaíba), Tamboré, Barueri, Santana de Parnaíba, Aldeia da Serra e Osasco';
+import { site, areasText, waGeneral } from '../../data/site';
 
 // `pending` marca respostas que ainda dependem de dados a preencher (ficam fora do JSON-LD).
 const faqs: { q: string; a: string[]; pending?: string }[] = [
@@ -44,7 +42,7 @@ const faqs: { q: string; a: string[]; pending?: string }[] = [
   },
   {
     q: 'Como é a entrega?',
-    a: [`Entregamos em mãos em ${areas}.`, 'Local e horário são combinados pelo WhatsApp.'],
+    a: [`Entregamos em mãos em ${areasText}.`, 'Local e horário são combinados pelo WhatsApp.'],
   },
 ];
 

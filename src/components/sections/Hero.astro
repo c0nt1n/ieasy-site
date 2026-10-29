@@ -1,7 +1,7 @@
 ---
 import Icon from '../Icon.astro';
 import LogoMark from '../LogoMark.astro';
-import { waGeneral } from '../../data/site';
+import { hoursInline, waGeneral } from '../../data/site';
 import { products } from '../../data/products';
 
 const title = 'Produtos Apple originais e lacrados, com entrega em Alphaville e região.';
@@ -15,7 +15,7 @@ const after = words.length;
 
   <div class="container-x relative grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-8">
     <div class="max-w-2xl">
-      <p class="intro eyebrow" style="--i:0">Alphaville, Barueri e Santana de Parnaíba</p>
+      <p class="intro eyebrow" style="--i:0">Alphaville, região e São Paulo</p>
       <h1 id="hero-title" class="mt-5 text-[2.5rem] leading-[1.02] font-semibold sm:text-6xl lg:text-[4rem]">
         {words.map((w, i) => (
           <>
@@ -36,7 +36,7 @@ const after = words.length;
           <Icon name="arrow" class="btn-arrow size-4" />
         </a>
       </div>
-      <p class="intro mt-6 text-sm text-graphite" style={`--i:${after + 5}`}>A iEasy é a nova marca da JLC Store, com a mesma equipe.</p>
+      <p class="intro mt-6 text-sm text-graphite" style={`--i:${after + 5}`}>Atendimento {hoursInline}.</p>
     </div>
 
     <!-- Composição visual: aparelho ilustrativo com profundidade (troque por foto quando houver) -->

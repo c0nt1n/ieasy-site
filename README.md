@@ -1,6 +1,6 @@
 # Site iEasy
 
-Site institucional da iEasy (antiga JLC Store), feito com Astro e Tailwind CSS. É um site estático: não precisa de servidor nem banco de dados.
+Site institucional da iEasy, feito com Astro e Tailwind CSS. É um site estático: não precisa de servidor nem banco de dados.
 
 ## Rodar no computador
 
