@@ -174,10 +174,10 @@ export const products: Product[] = [
     image: '',
     featured: false,
     colors: [
-      { name: 'Azul-céu', hex: '#cfe0ee' },
-      { name: 'Dourado-claro', hex: '#eadfc6' },
-      { name: 'Branco-nuvem', hex: '#f2f1ec' },
-      { name: 'Preto-espacial', hex: '#2a2a2c' },
+      { name: 'Azul-céu', hex: '#b9d1ec', image: 'iphone-air-azul-ceu.webp' },
+      { name: 'Dourado-claro', hex: '#e3d5bd', image: 'iphone-air-dourado-claro.webp' },
+      { name: 'Branco-nuvem', hex: '#f2f1ec', image: 'iphone-air-branco-nuvem.webp' },
+      { name: 'Preto-espacial', hex: '#2a2a2c', image: 'iphone-air-preto-espacial.webp' },
     ],
     capacities: ['256 GB', '512 GB', '1 TB'],
     specs: [
