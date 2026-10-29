@@ -215,11 +215,11 @@ export const products: Product[] = [
     image: '',
     featured: false,
     colors: [
-      { name: 'Ultramarino', hex: '#6f7fd9' },
-      { name: 'Verde-acetinado', hex: '#b5d1c4' },
-      { name: 'Rosa', hex: '#f1c8d5' },
-      { name: 'Branco', hex: '#f4f4f1' },
-      { name: 'Preto', hex: '#2f3033' },
+      { name: 'Ultramarino', hex: '#8196ec', image: 'iphone-16-ultramarino.webp' },
+      { name: 'Verde-acetinado', hex: '#a3d0ca', image: 'iphone-16-verde-acetinado.webp' },
+      { name: 'Rosa', hex: '#f2a6d1', image: 'iphone-16-rosa.webp' },
+      { name: 'Branco', hex: '#f4f4f1', image: 'iphone-16-branco.webp' },
+      { name: 'Preto', hex: '#3d3e40', image: 'iphone-16-preto.webp' },
     ],
     capacities: ['128 GB', '256 GB'],
     specs: [
