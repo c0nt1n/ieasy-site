@@ -1,0 +1,62 @@
+---
+import Icon from '../Icon.astro';
+import Pending from '../Pending.astro';
+import { site } from '../../data/site';
+---
+<section id="seguranca" class="on-dark bg-ink py-20 text-mist sm:py-28" aria-labelledby="seg-title">
+  <div class="container-x">
+    <div class="reveal max-w-2xl">
+      <p class="eyebrow">Por que comprar com a iEasy</p>
+      <h2 id="seg-title" class="section-title mt-4 text-paper">Segurança não é diferencial. É o padrão.</h2>
+      <p class="mt-5 text-base leading-relaxed text-mist sm:text-lg">Transparência antes, durante e depois da compra.</p>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Aviso em destaque -->
+      <article class="on-light reveal flex flex-col rounded-[28px] bg-paper p-6 text-graphite sm:p-8 md:col-span-2 lg:col-span-1 lg:row-span-2">
+        <span class="grid size-11 place-items-center rounded-2xl bg-ink text-paper"><Icon name="alert" class="size-5" /></span>
+        <h3 class="mt-6 text-2xl leading-tight font-semibold sm:text-3xl">Nunca pedimos pagamento por outro número.</h3>
+        <p class="mt-4 leading-relaxed">
+          Nosso único WhatsApp é o <strong class="font-semibold text-ink">{site.whatsapp.display}</strong>. Se alguém pedir pagamento por outro contato em nome da iEasy, não pague e fale com a gente.
+        </p>
+        <p class="mt-auto pt-6 text-sm">
+          Pix e cartão sempre em nome da empresa:<br />
+          <strong class="font-semibold text-ink"><Pending value={site.legalName} label="razão social" /></strong><br />
+          CNPJ <Pending value={site.cnpj} label="CNPJ" />
+        </p>
+      </article>
+
+      <article class="reveal rounded-[28px] bg-graphite p-6 ring-1 ring-paper/[0.06] sm:p-8">
+        <Icon name="package" class="size-6 text-paper" />
+        <h3 class="mt-5 text-xl font-semibold text-paper">Procedência informada</h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed">Antes da compra, você sabe se o aparelho é versão Anatel (nacional) ou importada. Sem surpresas.</p>
+      </article>
+
+      <article class="reveal rounded-[28px] bg-graphite p-6 ring-1 ring-paper/[0.06] sm:p-8">
+        <Icon name="search" class="size-6 text-paper" />
+        <h3 class="mt-5 text-xl font-semibold text-paper">Confira o número de série</h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed">
+          No iPhone, vá em Ajustes &gt; Geral &gt; Sobre e consulte o número no site da Apple.
+        </p>
+        <a href="https://checkcoverage.apple.com/?locale=pt_BR" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-paper underline underline-offset-4 decoration-paper/40 hover:decoration-paper">
+          Verificar no site da Apple
+          <Icon name="arrow-up-right" class="size-4" />
+        </a>
+      </article>
+
+      <article class="reveal rounded-[28px] bg-graphite p-6 ring-1 ring-paper/[0.06] sm:p-8">
+        <Icon name="shield-check" class="size-6 text-paper" />
+        <h3 class="mt-5 text-xl font-semibold text-paper">Garantia da loja</h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed"><Pending value={site.warranty} label="garantia da loja" /></p>
+      </article>
+
+      <article class="reveal rounded-[28px] bg-graphite p-6 ring-1 ring-paper/[0.06] sm:p-8">
+        <Icon name="undo" class="size-6 text-paper" />
+        <h3 class="mt-5 text-xl font-semibold text-paper">7 dias para desistir</h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed">
+          Em compras feitas fora de loja física, como pelo WhatsApp com entrega, você tem 7 dias a partir do recebimento para se arrepender (art. 49 do Código de Defesa do Consumidor).
+        </p>
+      </article>
+    </div>
+  </div>
+</section>

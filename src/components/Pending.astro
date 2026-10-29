@@ -1,0 +1,9 @@
+---
+// Mostra o valor se existir; caso contrário, um aviso visível [PREENCHER: ...].
+interface Props {
+  value?: string;
+  label: string;
+}
+const { value, label } = Astro.props;
+---
+{value ? <Fragment set:text={value} /> : <span class="pending">[PREENCHER: {label}]</span>}

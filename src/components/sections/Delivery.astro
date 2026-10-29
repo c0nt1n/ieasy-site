@@ -1,0 +1,81 @@
+---
+import Icon from '../Icon.astro';
+import { site, waGeneral } from '../../data/site';
+
+// Posições aproximadas e ilustrativas (fora de escala) em torno de Alphaville
+const points = [
+  { name: 'Santana de Parnaíba', x: 116, y: 125, lx: 116, ly: 105, anchor: 'middle' },
+  { name: 'Aldeia da Serra', x: 70, y: 218, lx: 50, ly: 242, anchor: 'start' },
+  { name: 'Barueri', x: 144, y: 274, lx: 144, ly: 298, anchor: 'middle' },
+  { name: 'Tamboré', x: 232, y: 250, lx: 232, ly: 274, anchor: 'middle' },
+  { name: 'Osasco', x: 322, y: 274, lx: 322, ly: 298, anchor: 'middle' },
+];
+---
+<section id="entrega" class="py-20 sm:py-28" aria-labelledby="entrega-title">
+  <div class="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+    <div class="reveal">
+      <p class="eyebrow">Área de entrega</p>
+      <h2 id="entrega-title" class="section-title mt-4">Entregamos onde você está.</h2>
+      <p class="lead mt-5 max-w-lg">Entrega em mãos, no local e horário combinados pelo WhatsApp.</p>
+      <ul class="mt-8 flex flex-wrap gap-2">
+        {
+          site.areas.map((a) => (
+            <li class="inline-flex items-center gap-1.5 rounded-full bg-mist px-3.5 py-2 text-sm text-ink ring-1 ring-ink/[0.05]">
+              <Icon name="map-pin" class="size-4 text-graphite" />
+              {a}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-8 text-[0.9375rem] text-graphite">
+        Está em outro bairro?{' '}
+        <a href={waGeneral('entrega no meu bairro')} target="_blank" rel="noopener" class="font-medium text-ink underline underline-offset-4">Consulte pelo WhatsApp</a>.
+      </p>
+    </div>
+
+    <div class="reveal relative mx-auto w-full max-w-md" aria-hidden="true">
+      <svg viewBox="0 0 400 400" class="w-full [mask-image:radial-gradient(circle_at_50%_50%,black_68%,transparent_95%)]">
+        <defs>
+          <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="1.1" fill="#000" fill-opacity="0.08"></circle>
+          </pattern>
+        </defs>
+        <rect width="400" height="400" fill="url(#dots)"></rect>
+        {[70, 130, 190].map((r) => <circle cx="200" cy="200" r={r} fill="none" stroke="#808080" stroke-opacity="0.45" stroke-dasharray="3 6" />)}
+        {points.map((p) => <line x1="200" y1="200" x2={p.x} y2={p.y} stroke="#808080" stroke-opacity="0.5" />)}
+        {
+          points.map((p) => (
+            <g>
+              <circle cx={p.x} cy={p.y} r="9" fill="#fff" stroke="#000" stroke-width="1.5" />
+              <circle cx={p.x} cy={p.y} r="3.5" fill="#000" />
+              <text x={p.lx} y={p.ly} text-anchor={p.anchor} font-size="14" font-family="Inter Variable, sans-serif" fill="#1A1A1A">{p.name}</text>
+            </g>
+          ))
+        }
+        <circle cx="200" cy="200" r="30" fill="#000" fill-opacity="0.06" class="pulse"></circle>
+        <circle cx="200" cy="200" r="15" fill="#000"></circle>
+        <circle cx="200" cy="200" r="5" fill="#fff"></circle>
+        <text x="200" y="166" text-anchor="middle" font-size="16" font-weight="600" font-family="Inter Tight Variable, sans-serif" fill="#000">Alphaville</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .pulse {
+      transform-origin: 200px 200px;
+      animation: pulse 3s ease-out infinite;
+    }
+    @keyframes pulse {
+      from {
+        transform: scale(0.6);
+        opacity: 1;
+      }
+      to {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+  }
+</style>

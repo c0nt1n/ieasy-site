@@ -1,0 +1,101 @@
+---
+import Logo from '../Logo.astro';
+import Icon from '../Icon.astro';
+import { waGeneral } from '../../data/site';
+
+const links = [
+  { href: '#produtos', label: 'Produtos' },
+  { href: '#como-comprar', label: 'Como comprar' },
+  { href: '#troca', label: 'Troca' },
+  { href: '#seguranca', label: 'Segurança' },
+  { href: '#quem-somos', label: 'Quem somos' },
+  { href: '#entrega', label: 'Entrega' },
+  { href: '#duvidas', label: 'Dúvidas' },
+];
+---
+<header id="topo" class="glass fixed inset-x-0 top-0 z-50 border-b border-ink/[0.06] transition-shadow duration-300 data-[scrolled]:shadow-[0_8px_30px_-18px_rgb(0_0_0/0.35)]">
+  <div class="container-x flex h-16 items-center justify-between gap-6">
+    <a href="#" class="-m-2 shrink-0 p-2" aria-label="iEasy, voltar ao início">
+      <Logo class="h-6 w-auto text-ink sm:h-7" title="iEasy" />
+    </a>
+
+    <nav aria-label="Seções" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} class="rounded-full px-3 py-2 text-sm text-graphite transition-colors hover:bg-ink/[0.05] hover:text-ink">
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={waGeneral()} target="_blank" rel="noopener" class="btn btn-primary hidden min-h-10 px-5 text-sm sm:inline-flex">
+        <Icon name="whatsapp" class="size-4" />
+        Falar no WhatsApp
+      </a>
+      <button
+        type="button"
+        class="grid size-11 place-items-center rounded-full text-ink transition-colors hover:bg-ink/[0.05] lg:hidden"
+        aria-controls="menu-mobile"
+        aria-expanded="false"
+        aria-label="Abrir menu"
+        data-menu-toggle
+      >
+        <Icon name="menu" class="size-6" data-icon-open />
+        <Icon name="close" class="hidden size-6" data-icon-close />
+      </button>
+    </div>
+  </div>
+
+  <div id="menu-mobile" class="hidden border-t border-ink/[0.06] lg:hidden" data-menu>
+    <nav aria-label="Seções (menu)" class="container-x py-3">
+      <ul class="grid">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} class="flex min-h-12 items-center justify-between border-b border-ink/[0.06] text-base text-ink" data-menu-link>
+                {l.label}
+                <Icon name="arrow" class="size-4 text-steel" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={waGeneral()} target="_blank" rel="noopener" class="btn btn-primary mt-4 mb-2 w-full">
+        <Icon name="whatsapp" class="size-5" />
+        Falar no WhatsApp
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('topo')!;
+  const toggle = header.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
+  const menu = header.querySelector<HTMLElement>('[data-menu]')!;
+
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    menu.classList.toggle('hidden', !open);
+    toggle.querySelector('[data-icon-open]')!.classList.toggle('hidden', open);
+    toggle.querySelector('[data-icon-close]')!.classList.toggle('hidden', !open);
+  };
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu.querySelectorAll('[data-menu-link]').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  const onScroll = () => header.toggleAttribute('data-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

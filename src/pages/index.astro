@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/sections/Header.astro';
+import Hero from '../components/sections/Hero.astro';
+import TrustBar from '../components/sections/TrustBar.astro';
+import Products from '../components/sections/Products.astro';
+import HowToBuy from '../components/sections/HowToBuy.astro';
+import TradeIn from '../components/sections/TradeIn.astro';
+import Security from '../components/sections/Security.astro';
+import About from '../components/sections/About.astro';
+import Reviews from '../components/sections/Reviews.astro';
+import Delivery from '../components/sections/Delivery.astro';
+import Faq from '../components/sections/Faq.astro';
+import Footer from '../components/sections/Footer.astro';
+import FloatingWhatsApp from '../components/sections/FloatingWhatsApp.astro';
+---
+<Layout>
+  <Header />
+  <main id="conteudo">
+    <Hero />
+    <TrustBar />
+    <Products />
+    <HowToBuy />
+    <TradeIn />
+    <Security />
+    <About />
+    <Reviews />
+    <Delivery />
+    <Faq />
+  </main>
+  <Footer />
+  <FloatingWhatsApp />
+</Layout>
+
+<script>
+  // Inclinação sutil dos cards: só com mouse/trackpad e sem redução de movimento.
+  if (window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches) {
+    const MAX = 4;
+    document.querySelectorAll<HTMLElement>('.tilt').forEach((el) => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.setProperty('--rx', `${(-y * MAX).toFixed(2)}deg`);
+        el.style.setProperty('--ry', `${(x * MAX).toFixed(2)}deg`);
+      });
+      el.addEventListener('pointerleave', () => {
+        el.style.setProperty('--rx', '0deg');
+        el.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+</script>

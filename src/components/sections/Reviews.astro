@@ -1,0 +1,54 @@
+---
+import Icon from '../Icon.astro';
+import Pending from '../Pending.astro';
+import { site } from '../../data/site';
+import { reviews } from '../../data/reviews';
+---
+<section id="avaliacoes" class="bg-mist py-20 sm:py-28" aria-labelledby="aval-title">
+  <div class="container-x">
+    <div class="reveal grid gap-8 rounded-[32px] bg-paper p-6 ring-1 ring-ink/[0.05] sm:p-10 md:grid-cols-[1fr_auto] md:items-center lg:p-14">
+      <div>
+        <p class="eyebrow">Avaliações</p>
+        <h2 id="aval-title" class="mt-4 text-3xl leading-tight font-semibold sm:text-4xl">O que dizem no Google.</h2>
+        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <span class="font-display text-5xl font-semibold tracking-tight text-ink"><Pending value={site.googleRating} label="nota" /></span>
+          <span class="flex gap-1 text-ink" aria-hidden="true">
+            {Array.from({ length: 5 }).map(() => <Icon name="star" class="size-5" />)}
+          </span>
+          <span class="text-sm text-graphite">
+            <Pending value={site.googleReviewsCount} label="nº de avaliações" /> avaliações
+          </span>
+        </div>
+      </div>
+      {
+        site.googleReviewsUrl ? (
+          <a href={site.googleReviewsUrl} target="_blank" rel="noopener" class="btn btn-primary">
+            Veja nossas avaliações no Google
+            <Icon name="arrow-up-right" class="size-4" />
+          </a>
+        ) : (
+          <span class="flex flex-col items-start gap-2">
+            <span class="btn btn-ghost pointer-events-none opacity-70">Veja nossas avaliações no Google</span>
+            <span class="pending">[PREENCHER: link do Google]</span>
+          </span>
+        )
+      }
+    </div>
+
+    {
+      reviews.length > 0 && (
+        <ul class="mt-4 grid gap-4 md:grid-cols-3">
+          {reviews.map((r) => (
+            <li class="reveal rounded-[28px] bg-paper p-6 ring-1 ring-ink/[0.05] sm:p-8">
+              <span class="flex gap-0.5 text-ink" role="img" aria-label={`${r.rating} de 5 estrelas`}>
+                {Array.from({ length: r.rating }).map(() => <Icon name="star" class="size-4" />)}
+              </span>
+              <blockquote class="mt-4 leading-relaxed text-graphite">“{r.text}”</blockquote>
+              <p class="mt-5 text-sm font-semibold text-ink">{r.name}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>

@@ -1,0 +1,42 @@
+---
+// Foto otimizada (AVIF/WebP) a partir de src/assets/produtos/, ou espaço reservado se não houver foto.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import DeviceGlyph from './DeviceGlyph.astro';
+import type { Category } from '../data/products';
+
+interface Props {
+  file: string;
+  alt: string;
+  category: Category;
+  sizes?: string;
+  class?: string;
+  eager?: boolean;
+}
+const { file, alt, category, sizes = '(min-width: 1024px) 280px, 50vw', class: className = '', eager = false } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/produtos/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const match = file ? images[`/src/assets/produtos/${file}`] : undefined;
+if (file && !match) console.warn(`[iEasy] Imagem não encontrada: src/assets/produtos/${file}`);
+---
+<div class:list={['relative overflow-hidden bg-mist', className]}>
+  {
+    match ? (
+      <Picture
+        src={match.default}
+        alt={alt}
+        formats={['avif', 'webp']}
+        widths={[320, 480, 720]}
+        sizes={sizes}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        class="h-full w-full object-contain p-6"
+      />
+    ) : (
+      <div class="dot-grid absolute inset-0 grid place-items-center">
+        <DeviceGlyph category={category} class="w-[38%] max-w-28 text-steel" />
+        <span class="sr-only">Foto em breve</span>
+      </div>
+    )
+  }
+</div>

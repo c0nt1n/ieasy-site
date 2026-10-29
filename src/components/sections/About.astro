@@ -1,0 +1,61 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from '../Icon.astro';
+import Pending from '../Pending.astro';
+import { site, waGeneral } from '../../data/site';
+
+const photos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/equipe/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const photo = site.attendantPhoto ? photos[`/src/assets/equipe/${site.attendantPhoto}`] : undefined;
+---
+<section id="quem-somos" class="py-20 sm:py-28" aria-labelledby="sobre-title">
+  <div class="container-x grid items-center gap-10 md:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+    <figure class="reveal mx-auto w-full max-w-sm">
+      <div class="relative aspect-[4/5] overflow-hidden rounded-[32px] bg-mist">
+        {
+          photo ? (
+            <Picture
+              src={photo.default}
+              alt={site.attendantName ? `Foto de ${site.attendantName}` : 'Foto de quem atende na iEasy'}
+              formats={['avif', 'webp']}
+              widths={[360, 540, 720]}
+              sizes="(min-width: 768px) 384px, 90vw"
+              loading="lazy"
+              class="h-full w-full object-cover"
+            />
+          ) : (
+            <div class="dot-grid absolute inset-0 grid place-items-center">
+              <div class="text-center">
+                <Icon name="user" class="mx-auto size-16 text-steel" strokeWidth={1.2} />
+                <p class="mt-3"><span class="pending">[PREENCHER: foto]</span></p>
+              </div>
+            </div>
+          )
+        }
+      </div>
+      <figcaption class="mt-4 flex items-center justify-between gap-4 px-1">
+        <span>
+          <span class="block font-display text-lg font-semibold text-ink"><Pending value={site.attendantName} label="nome" /></span>
+          <span class="block text-sm text-graphite"><Pending value={site.attendantRole} label="função" /></span>
+        </span>
+      </figcaption>
+    </figure>
+
+    <div class="reveal">
+      <p class="eyebrow">Quem somos</p>
+      <h2 id="sobre-title" class="section-title mt-4">Nome novo. A mesma equipe.</h2>
+      <div class="lead mt-6 space-y-4">
+        <p>
+          A iEasy é a nova marca da JLC Store, com a mesma equipe. Mudou o nome, não o jeito de atender.
+        </p>
+        <p>
+          Atendemos Alphaville e região de perto: conversa direta pelo WhatsApp, informação clara sobre cada aparelho e entrega em mãos, no local e horário combinados.
+        </p>
+      </div>
+      <a href={waGeneral()} target="_blank" rel="noopener" class="btn btn-primary mt-8">
+        <Icon name="whatsapp" class="size-5" />
+        Falar com a equipe
+      </a>
+    </div>
+  </div>
+</section>

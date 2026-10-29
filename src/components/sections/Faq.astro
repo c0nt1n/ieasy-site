@@ -1,0 +1,91 @@
+---
+import Icon from '../Icon.astro';
+import { site, waGeneral } from '../../data/site';
+
+const areas = 'Alphaville (Barueri e Santana de Parnaíba), Tamboré, Barueri, Santana de Parnaíba, Aldeia da Serra e Osasco';
+
+// `pending` marca respostas que ainda dependem de dados a preencher (ficam fora do JSON-LD).
+const faqs: { q: string; a: string[]; pending?: string }[] = [
+  {
+    q: 'Os produtos são originais e lacrados?',
+    a: [
+      'Sim. Trabalhamos com produtos Apple originais e lacrados.',
+      'Na entrega, você confere o lacre, a caixa e o número de série, e pode consultar esse número no site da Apple.',
+    ],
+  },
+  {
+    q: 'Anatel ou importado: qual a diferença?',
+    a: [
+      'A versão Anatel é a homologada para venda no Brasil. A importada foi fabricada para outro país e funciona normalmente aqui.',
+      'Pode haver diferenças, como o tipo de chip (alguns modelos, como os dos Estados Unidos, usam apenas eSIM), o conteúdo da caixa e as condições de suporte do fabricante. Antes da compra, informamos qual é a versão de cada aparelho.',
+    ],
+  },
+  {
+    q: 'Quais são as formas de pagamento?',
+    a: [
+      'Pix ou cartão de crédito em até 10x sem juros. Seu iPhone usado também pode entrar como parte do pagamento.',
+      'Os pagamentos são feitos sempre em nome da empresa e combinados pelo nosso único WhatsApp.',
+    ],
+  },
+  {
+    q: 'Como funciona a troca do iPhone usado?',
+    a: [
+      'Envie pelo WhatsApp o modelo, a capacidade e o estado do seu iPhone. Fotos ajudam.',
+      'Fazemos a avaliação e o valor entra como parte do pagamento do aparelho novo.',
+    ],
+  },
+  {
+    q: 'Qual é a garantia?',
+    a: [
+      site.warranty,
+      'Além disso, em compras feitas fora de loja física, você tem 7 dias a partir do recebimento para desistir (art. 49 do Código de Defesa do Consumidor).',
+    ],
+    pending: site.warranty ? undefined : 'garantia da loja',
+  },
+  {
+    q: 'Como é a entrega?',
+    a: [`Entregamos em mãos em ${areas}.`, 'Local e horário são combinados pelo WhatsApp.'],
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs
+    .filter((f) => !f.pending)
+    .map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.join(' ') } })),
+};
+---
+<section id="duvidas" class="bg-mist py-20 sm:py-28" aria-labelledby="faq-title">
+  <div class="container-x grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+    <div class="reveal lg:sticky lg:top-28 lg:self-start">
+      <p class="eyebrow">Dúvidas frequentes</p>
+      <h2 id="faq-title" class="section-title mt-4">Perguntas frequentes.</h2>
+      <p class="lead mt-5">Não encontrou sua resposta?</p>
+      <a href={waGeneral('tirar uma dúvida')} target="_blank" rel="noopener" class="btn btn-primary mt-6">
+        <Icon name="whatsapp" class="size-5" />
+        Pergunte no WhatsApp
+      </a>
+    </div>
+
+    <div class="reveal divide-y divide-ink/[0.08] rounded-[28px] bg-paper px-5 ring-1 ring-ink/[0.05] sm:px-8">
+      {
+        faqs.map((f, i) => (
+          <details class="faq group" name="faq" open={i === 0}>
+            <summary class="flex min-h-16 cursor-pointer items-center justify-between gap-6 py-5 text-left font-display text-[1.0625rem] font-semibold tracking-tight text-ink sm:text-lg">
+              {f.q}
+              <span class="faq-icon grid size-8 shrink-0 place-items-center rounded-full bg-mist text-ink">
+                <Icon name="plus" class="size-4" />
+              </span>
+            </summary>
+            <div class="space-y-3 pr-10 pb-6 text-[0.9375rem] leading-relaxed text-graphite">
+              {f.a.map((p) => (p ? <p>{p}</p> : <p><span class="pending">[PREENCHER: {f.pending}]</span></p>))}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

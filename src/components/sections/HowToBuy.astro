@@ -1,0 +1,50 @@
+---
+import Icon from '../Icon.astro';
+import { waGeneral } from '../../data/site';
+
+const steps = [
+  {
+    title: 'Escolha pelo WhatsApp',
+    text: 'Conte o que procura. Confirmamos modelo, cor, capacidade e versão (Anatel ou importada) antes de fechar.',
+  },
+  {
+    title: 'Receba no local e horário combinados',
+    text: 'Entregamos em mãos em Alphaville e região: em casa, no trabalho ou onde for mais prático para você.',
+  },
+  {
+    title: 'Confira o lacre e o aparelho na entrega',
+    text: 'Veja o lacre, a caixa e o número de série com calma, na hora da entrega.',
+  },
+];
+---
+<section id="como-comprar" class="bg-mist py-20 sm:py-28" aria-labelledby="como-title">
+  <div class="container-x">
+    <div class="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-xl">
+        <p class="eyebrow">Como comprar</p>
+        <h2 id="como-title" class="section-title mt-4">Simples do começo ao fim.</h2>
+      </div>
+      <a href={waGeneral()} target="_blank" rel="noopener" class="btn btn-primary self-start md:self-auto">
+        <Icon name="whatsapp" class="size-5" />
+        Começar pelo WhatsApp
+      </a>
+    </div>
+
+    <ol class="mt-12 grid gap-4 md:grid-cols-3 md:gap-5">
+      {
+        steps.map((s, i) => (
+          <li class="reveal relative flex flex-col rounded-[28px] bg-paper p-6 ring-1 ring-ink/[0.05] sm:p-8">
+            <span class="font-display text-5xl font-semibold tracking-tight text-steel tabular-nums sm:text-6xl" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="mt-8 text-xl font-semibold sm:text-2xl">
+              <span class="sr-only">Passo {i + 1}: </span>
+              {s.title}
+            </h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-graphite">{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

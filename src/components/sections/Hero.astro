@@ -1,0 +1,98 @@
+---
+import Icon from '../Icon.astro';
+import LogoMark from '../LogoMark.astro';
+import { waGeneral } from '../../data/site';
+---
+<section class="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28" aria-labelledby="hero-title">
+  <!-- fundo: grade pontilhada com fade -->
+  <div class="dot-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_70%_40%,black,transparent)]" aria-hidden="true"></div>
+
+  <div class="container-x relative grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-8">
+    <div class="max-w-2xl">
+      <p class="eyebrow">Alphaville, Barueri e Santana de Parnaíba</p>
+      <h1 id="hero-title" class="mt-5 text-[2.5rem] leading-[1.02] font-semibold sm:text-6xl lg:text-[4rem]">
+        Produtos Apple originais e lacrados, com entrega em Alphaville e região.
+      </h1>
+      <p class="lead mt-6 max-w-xl">
+        Condições competitivas, Pix ou até 10x sem juros e um atendimento próximo, do primeiro contato até a entrega em mãos.
+      </p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href={waGeneral()} target="_blank" rel="noopener" class="btn btn-primary min-h-14 px-7 text-base">
+          <Icon name="whatsapp" class="size-5" />
+          Falar no WhatsApp
+        </a>
+        <a href="#produtos" class="btn btn-ghost min-h-14 px-7 text-base">
+          Ver produtos
+          <Icon name="arrow" class="btn-arrow size-4" />
+        </a>
+      </div>
+      <p class="mt-6 text-sm text-graphite">A iEasy é a nova marca da JLC Store, com a mesma equipe.</p>
+    </div>
+
+    <!-- Composição visual: aparelho ilustrativo com profundidade (troque por foto quando houver) -->
+    <div class="relative mx-auto h-[440px] w-full max-w-[420px] sm:h-[520px]" data-stage aria-hidden="true">
+      <div class="parallax-slow absolute inset-0">
+        <!-- tablet ao fundo -->
+        <div class="layer absolute top-6 right-0 h-[300px] w-[230px] rounded-[30px] border border-ink/10 bg-mist shadow-[0_30px_60px_-30px_rgb(0_0_0/0.35)] sm:h-[360px] sm:w-[270px]" data-depth="8">
+          <div class="absolute inset-3 rounded-[22px] bg-paper"></div>
+        </div>
+
+        <!-- telefone principal -->
+        <div class="layer absolute top-12 left-1/2 sm:top-10" data-depth="18">
+          <div class="relative h-[400px] -translate-x-[62%] w-[196px] rounded-[42px] bg-ink p-[7px] shadow-[0_50px_80px_-30px_rgb(0_0_0/0.55),0_0_0_1px_rgb(0_0_0/0.9)] sm:h-[460px] sm:w-[226px] sm:rounded-[48px]">
+            <div class="relative h-full w-full overflow-hidden rounded-[36px] bg-[radial-gradient(120%_80%_at_30%_10%,#1a1a1a,#000_70%)] sm:rounded-[41px]">
+              <div class="absolute top-3 left-1/2 h-[22px] w-[74px] -translate-x-1/2 rounded-full bg-ink ring-1 ring-paper/5"></div>
+              <div class="absolute inset-0 bg-[linear-gradient(115deg,transparent_35%,rgb(255_255_255/0.08)_48%,transparent_60%)]"></div>
+              <div class="absolute inset-0 grid place-items-center">
+                <LogoMark class="h-24 w-auto text-paper sm:h-28" />
+              </div>
+              <div class="absolute inset-x-6 bottom-8 h-1 rounded-full bg-paper/30"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- selos em vidro fosco -->
+        <div class="layer absolute top-[14%] -left-1 sm:-left-6" data-depth="30">
+          <div class="glass float-a flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-[0_16px_40px_-18px_rgb(0_0_0/0.4)] ring-1 ring-ink/[0.06]">
+            <span class="grid size-8 place-items-center rounded-full bg-ink text-paper"><Icon name="check" class="size-4" strokeWidth={2} /></span>
+            <span class="text-sm leading-tight font-medium text-ink">Original<br /><span class="font-normal text-graphite">e lacrado</span></span>
+          </div>
+        </div>
+        <div class="layer absolute right-0 bottom-[22%] sm:-right-4" data-depth="26">
+          <div class="glass float-b flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-[0_16px_40px_-18px_rgb(0_0_0/0.4)] ring-1 ring-ink/[0.06]">
+            <span class="grid size-8 place-items-center rounded-full bg-ink text-paper"><Icon name="map-pin" class="size-4" /></span>
+            <span class="text-sm leading-tight font-medium text-ink">Entrega em mãos<br /><span class="font-normal text-graphite">Alphaville e região</span></span>
+          </div>
+        </div>
+        <div class="layer absolute bottom-[4%] left-[6%]" data-depth="22">
+          <div class="glass float-a flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-[0_16px_40px_-18px_rgb(0_0_0/0.4)] ring-1 ring-ink/[0.06]">
+            <span class="grid size-8 place-items-center rounded-full bg-ink text-paper"><Icon name="card" class="size-4" /></span>
+            <span class="text-sm leading-tight font-medium text-ink">Pix ou até<br /><span class="font-normal text-graphite">10x sem juros</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Profundidade leve: as camadas seguem o cursor (apenas mouse/trackpad e sem redução de movimento).
+  const stage = document.querySelector<HTMLElement>('[data-stage]');
+  const ok = window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)').matches;
+  if (stage && ok) {
+    const layers = [...stage.querySelectorAll<HTMLElement>('[data-depth]')];
+    layers.forEach((l) => (l.style.transition = 'translate 0.6s cubic-bezier(0.22, 1, 0.36, 1)'));
+    let raf = 0;
+    window.addEventListener('pointermove', (e) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
+        layers.forEach((l) => {
+          const d = Number(l.dataset.depth);
+          l.style.translate = `${(-x * d).toFixed(1)}px ${(-y * d).toFixed(1)}px`;
+        });
+      });
+    });
+  }
+</script>

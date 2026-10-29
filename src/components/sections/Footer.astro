@@ -1,0 +1,73 @@
+---
+import Logo from '../Logo.astro';
+import Icon from '../Icon.astro';
+import Pending from '../Pending.astro';
+import { site, waGeneral } from '../../data/site';
+
+const year = new Date().getFullYear();
+---
+<footer class="on-dark bg-ink pt-16 pb-28 text-mist sm:pt-20 sm:pb-24">
+  <div class="container-x">
+    <div class="flex flex-col justify-between gap-10 border-b border-paper/10 pb-12 md:flex-row md:items-end">
+      <div>
+        <Logo class="h-9 w-auto text-paper" title="iEasy" />
+        <p class="mt-4 max-w-sm text-sm leading-relaxed">Produtos Apple originais e lacrados, com entrega em Alphaville e região.</p>
+        <p class="mt-2 text-sm">iEasy – antiga JLC Store</p>
+      </div>
+      <a href={waGeneral()} target="_blank" rel="noopener" class="btn btn-light self-start md:self-auto">
+        <Icon name="whatsapp" class="size-5" />
+        Falar no WhatsApp
+      </a>
+    </div>
+
+    <div class="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <h2 class="text-sm font-semibold text-paper">Contato</h2>
+        <ul class="mt-4 space-y-3 text-sm">
+          <li>
+            <a href={waGeneral()} target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-paper">
+              <Icon name="whatsapp" class="size-4" /> {site.whatsapp.display}
+            </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="instagram" class="size-4" />
+            {
+              site.instagram ? (
+                <a href={site.instagram} target="_blank" rel="noopener" class="hover:text-paper">{site.instagramHandle || 'Instagram'}</a>
+              ) : (
+                <Pending label="Instagram" />
+              )
+            }
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="clock" class="size-4" />
+            <Pending value={site.hoursText} label="horário de atendimento" />
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-sm font-semibold text-paper">Área atendida</h2>
+        <ul class="mt-4 space-y-2 text-sm">
+          {site.areas.map((a) => <li>{a}</li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-sm font-semibold text-paper">Empresa</h2>
+        <ul class="mt-4 space-y-3 text-sm">
+          <li><Pending value={site.legalName} label="razão social" /></li>
+          <li>CNPJ <Pending value={site.cnpj} label="CNPJ" /></li>
+          <li class="pt-2 leading-relaxed">Nunca pedimos pagamento por outro número além do {site.whatsapp.display}.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 border-t border-paper/10 pt-8 text-xs leading-relaxed sm:flex-row sm:justify-between">
+      <p>© {year} iEasy. Todos os direitos reservados.</p>
+      <p class="max-w-xl sm:text-right">
+        Apple, iPhone, iPad, MacBook, AirPods, Apple Watch e AirTag são marcas da Apple Inc. A iEasy é uma loja independente, sem vínculo com a Apple.
+      </p>
+    </div>
+  </div>
+</footer>

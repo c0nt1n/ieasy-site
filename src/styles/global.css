@@ -1,0 +1,259 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/inter-tight';
+
+/* Paleta oficial da iEasy (extraída do logo) */
+@theme {
+  --color-ink: #000000; /* Preto absoluto: logo e elementos principais */
+  --color-paper: #ffffff; /* Branco puro: fundo principal */
+  --color-graphite: #1a1a1a; /* Grafite: textos e elementos secundários */
+  --color-mist: #f5f5f5; /* Cinza-claro: fundos alternativos */
+  --color-steel: #808080; /* Cinza médio: detalhes (não usar em texto pequeno sobre branco) */
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Inter Tight Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-paper text-graphite font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-ink;
+    text-wrap: balance;
+    letter-spacing: -0.03em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-paper);
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.8125rem] font-medium tracking-wide text-graphite;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply block h-px w-6 bg-steel;
+  }
+  .on-dark .eyebrow {
+    @apply text-mist;
+  }
+  .section-title {
+    @apply text-[2rem] leading-[1.08] font-semibold sm:text-5xl;
+  }
+  .lead {
+    @apply text-base leading-relaxed text-graphite sm:text-lg;
+  }
+
+  /* Botões */
+  .btn {
+    @apply relative inline-flex min-h-12 items-center justify-center gap-2 overflow-hidden rounded-full px-6 text-[0.9375rem] font-medium whitespace-nowrap select-none;
+    transition:
+      transform 0.35s var(--ease-out-soft),
+      background-color 0.25s,
+      color 0.25s,
+      box-shadow 0.35s var(--ease-out-soft);
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    @apply bg-ink text-paper;
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  }
+  .btn-primary::after {
+    /* brilho que atravessa o botão no hover */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.22) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s var(--ease-out-soft);
+  }
+  .btn-light {
+    @apply bg-paper text-ink;
+  }
+  .btn-ghost {
+    @apply bg-transparent text-ink ring-1 ring-ink/15 ring-inset;
+  }
+  .btn-ghost-dark {
+    @apply bg-transparent text-paper ring-1 ring-paper/25 ring-inset;
+  }
+  @media (hover: hover) {
+    .btn-primary:hover {
+      @apply bg-graphite;
+      box-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 14px 30px -12px rgb(0 0 0 / 0.55);
+      transform: translateY(-1px);
+    }
+    .btn-primary:hover::after {
+      transform: translateX(120%);
+    }
+    .btn-ghost:hover {
+      @apply bg-mist ring-ink/25;
+    }
+    .btn-light:hover {
+      @apply bg-mist;
+      transform: translateY(-1px);
+    }
+    .btn-ghost-dark:hover {
+      @apply bg-paper/10 ring-paper/40;
+    }
+    .btn .btn-arrow {
+      transition: transform 0.35s var(--ease-out-soft);
+    }
+    .btn:hover .btn-arrow {
+      transform: translateX(3px);
+    }
+  }
+
+  /* Vidro fosco: usado só no header, no botão flutuante e nos selos do hero */
+  .glass {
+    background: rgb(255 255 255 / 0.85);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+  }
+  .glass-dark {
+    background: rgb(0 0 0 / 0.78);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+  }
+
+  /* Marcação visível de conteúdo pendente */
+  .pending {
+    @apply inline-block rounded-md border border-dashed border-steel px-1.5 py-0.5 font-mono text-[0.8em] text-graphite;
+  }
+  .on-dark .pending {
+    @apply border-steel text-mist;
+  }
+  .on-dark .on-light .pending {
+    @apply text-graphite;
+  }
+
+  /* Fundo pontilhado sutil */
+  .dot-grid {
+    background-image: radial-gradient(rgb(0 0 0 / 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Card com leve inclinação (variáveis definidas via JS apenas em mouse/trackpad) */
+  .tilt {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.5s var(--ease-out-soft), box-shadow 0.5s var(--ease-out-soft);
+    will-change: transform;
+  }
+}
+
+/* Revelação ao rolar: animação ligada à posição de rolagem (sem atraso e sem JS).
+   O conteúdo nunca fica escondido em navegadores sem suporte. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .parallax-slow {
+      animation: parallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+    @keyframes parallax {
+      to {
+        transform: translateY(-70px);
+      }
+    }
+  }
+
+  .float-a {
+    animation: float 7s ease-in-out infinite;
+  }
+  .float-b {
+    animation: float 8s ease-in-out -3s infinite;
+  }
+  @keyframes float {
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .tilt {
+    transform: none !important;
+  }
+}
+
+/* Acordeão (details/summary nativo: acessível por teclado) */
+details.faq summary {
+  list-style: none;
+}
+details.faq summary::-webkit-details-marker {
+  display: none;
+}
+details.faq .faq-icon {
+  transition: transform 0.35s var(--ease-out-soft);
+}
+details.faq[open] .faq-icon {
+  transform: rotate(45deg);
+}
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  details.faq::details-content {
+    height: 0;
+    overflow: hidden;
+    transition:
+      height 0.4s var(--ease-out-soft),
+      content-visibility 0.4s allow-discrete;
+  }
+  details.faq[open]::details-content {
+    height: auto;
+  }
+}

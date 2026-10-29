@@ -1,0 +1,27 @@
+---
+import Icon, { type IconName } from '../Icon.astro';
+
+const items: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'shield-check', title: 'Originais e lacrados', text: 'Procedência informada antes da compra.' },
+  { icon: 'map-pin', title: 'Entrega em Alphaville e região', text: 'No local e horário combinados.' },
+  { icon: 'card', title: 'Pix ou até 10x sem juros', text: 'Condições combinadas pelo WhatsApp.' },
+  { icon: 'swap', title: 'Seu iPhone usado entra no pagamento', text: 'Avaliação pelo WhatsApp.' },
+];
+---
+<section aria-label="Por que confiar" class="border-y border-ink/[0.06] bg-mist">
+  <ul class="container-x grid grid-cols-1 gap-x-8 gap-y-6 py-9 sm:grid-cols-2 lg:grid-cols-4 lg:py-10">
+    {
+      items.map((it) => (
+        <li class="flex items-start gap-3.5">
+          <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-paper text-ink shadow-[0_1px_2px_rgb(0_0_0/0.06)] ring-1 ring-ink/[0.06]">
+            <Icon name={it.icon} class="size-5" />
+          </span>
+          <span>
+            <span class="block text-[0.9375rem] leading-snug font-semibold text-ink">{it.title}</span>
+            <span class="mt-0.5 block text-sm text-graphite">{it.text}</span>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
