@@ -152,11 +152,11 @@ export const products: Product[] = [
     image: '',
     featured: false,
     colors: [
-      { name: 'Lavanda', hex: '#d9cdea' },
-      { name: 'Sálvia', hex: '#c8d5bf' },
-      { name: 'Azul-névoa', hex: '#c4d4e3' },
-      { name: 'Branco', hex: '#f4f4f1' },
-      { name: 'Preto', hex: '#2c2c2e' },
+      { name: 'Lavanda', hex: '#d9cdea', image: 'iphone-17-lavanda.webp' },
+      { name: 'Sálvia', hex: '#bcd19c', image: 'iphone-17-salvia.webp' },
+      { name: 'Azul-névoa', hex: '#a9c6ea', image: 'iphone-17-azul-nevoa.webp' },
+      { name: 'Branco', hex: '#f4f4f1', image: 'iphone-17-branco.webp' },
+      { name: 'Preto', hex: '#3d3d3f', image: 'iphone-17-preto.webp' },
     ],
     capacities: ['256 GB', '512 GB'],
     specs: [
