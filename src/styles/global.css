@@ -9,6 +9,8 @@
   --color-graphite: #1a1a1a; /* Grafite: textos e elementos secundários */
   --color-mist: #f5f5f5; /* Cinza-claro: fundos alternativos */
   --color-steel: #808080; /* Cinza médio: detalhes (não usar em texto pequeno sobre branco) */
+  --color-whatsapp: #25d366; /* Exceção: só no botão flutuante do WhatsApp */
+  --color-whatsapp-dark: #1ebe5a;
 
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Inter Tight Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
