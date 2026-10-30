@@ -56,7 +56,7 @@ const watchPair = [
 
 // Posição de cada linha na grade bento (desktop: 4 colunas)
 const bento: Record<Category, string> = {
-  iphone: 'col-span-2 row-span-2 lg:col-span-2 lg:row-span-2',
+  iphone: 'col-span-2 row-span-2 min-h-[22rem] lg:col-span-2 lg:row-span-2 lg:min-h-0',
   macbook: 'col-span-2 lg:col-span-2',
   ipad: 'col-span-1',
   airpods: 'col-span-1',
@@ -85,20 +85,21 @@ const bento: Record<Category, string> = {
               <a
                 href={`#linha-${c.id}`}
                 class:list={[
-                  'tilt group relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] p-5 sm:p-6',
+                  'tilt group relative flex h-full flex-col overflow-hidden rounded-[28px] p-5 sm:p-6',
+                  // no iPhone o texto fica em cima e o leque de aparelhos embaixo, sem passar por trás do texto
+                  dark ? 'justify-start gap-2' : 'justify-between',
                   dark ? 'on-dark bg-ink text-paper' : 'bg-mist text-ink ring-1 ring-ink/[0.04]',
                 ]}
               >
                 {c.id === 'iphone' ? (
                   <>
-                    <span class="fan pointer-events-none absolute inset-y-0 right-0 w-[72%] sm:w-[60%]" aria-hidden="true">
+                    <span class="fan pointer-events-none absolute inset-x-0 bottom-0 h-[54%] sm:h-[62%]" aria-hidden="true">
                       {iphoneFan.map((f) => (
                         <span class:list={['fan-item', f.pos]}>
                           <Image src={f.src} alt="" widths={[160, 240, 320, 480]} sizes="(min-width: 1024px) 260px, 40vw" class="h-full w-auto" />
                         </span>
                       ))}
                     </span>
-                    <span class="pointer-events-none absolute inset-0 bg-linear-to-r from-ink from-10% via-ink/50 via-35% to-transparent to-55%" aria-hidden="true" />
                   </>
                 ) : c.id === 'macbook' ? (
                   <span class="pointer-events-none absolute inset-y-0 right-0 w-[62%] sm:w-[55%]" aria-hidden="true">
@@ -159,8 +160,8 @@ const bento: Record<Category, string> = {
                   </span>
                   <span
                     class:list={[
-                      'mt-4 inline-grid size-9 place-items-center rounded-full transition-transform duration-500 ease-out-soft group-hover:translate-x-1',
-                      dark ? 'bg-paper text-ink' : 'bg-ink text-paper',
+                      'inline-grid size-9 place-items-center rounded-full transition-transform duration-500 ease-out-soft group-hover:translate-x-1',
+                      dark ? 'absolute top-1 right-0 bg-paper text-ink sm:top-2 sm:size-11' : 'mt-4 bg-ink text-paper',
                     ]}
                   >
                     <Icon name="arrow" class="size-4" />
@@ -208,20 +209,20 @@ const bento: Record<Category, string> = {
   /* Leque de iPhones: o do meio na frente, os outros inclinados atrás. Abre um pouco no hover. */
   .fan-item {
     position: absolute;
-    bottom: -10%;
+    bottom: -14%;
     display: block;
     transform-origin: 50% 100%;
     transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     filter: drop-shadow(0 18px 30px rgb(0 0 0 / 0.55));
   }
   .fan-c {
-    height: 84%;
+    height: 112%;
     left: 50%;
     transform: translateX(-50%);
   }
   .fan-l,
   .fan-r {
-    height: 70%;
+    height: 96%;
     left: 50%;
   }
   .fan-l {
