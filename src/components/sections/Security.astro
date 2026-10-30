@@ -20,9 +20,8 @@ import { site } from '../../data/site';
           Nosso único WhatsApp é o <strong class="font-semibold text-ink">{site.whatsapp.display}</strong>. Se alguém pedir pagamento por outro contato em nome da iEasy, não pague e fale com a gente.
         </p>
         <p class="mt-auto pt-6 text-sm">
-          Pix e cartão sempre em nome da empresa:<br />
-          <strong class="font-semibold text-ink"><Pending value={site.legalName} label="razão social" /></strong><br />
-          CNPJ <Pending value={site.cnpj} label="CNPJ" />
+          Na dúvida, confirme pelo nosso Instagram oficial:<br />
+          <a href={site.instagram} target="_blank" rel="noopener" class="font-semibold text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink">{site.instagramHandle}</a>
         </p>
       </article>
 
@@ -51,10 +50,10 @@ import { site } from '../../data/site';
       </article>
 
       <article class="reveal rounded-[28px] bg-graphite p-6 ring-1 ring-paper/[0.06] sm:p-8">
-        <Icon name="undo" class="size-6 text-paper" />
-        <h3 class="mt-5 text-xl font-semibold text-paper">7 dias para desistir</h3>
+        <Icon name="chat" class="size-6 text-paper" />
+        <h3 class="mt-5 text-xl font-semibold text-paper">Suporte depois da compra</h3>
         <p class="mt-2.5 text-[0.9375rem] leading-relaxed">
-          Em compras feitas fora de loja física, como pelo WhatsApp com entrega, você tem 7 dias a partir do recebimento para se arrepender (art. 49 do Código de Defesa do Consumidor).
+          A venda não termina na entrega. A gente acompanha como ficou o aparelho, e qualquer dúvida é só chamar no mesmo WhatsApp.
         </p>
       </article>
     </div>

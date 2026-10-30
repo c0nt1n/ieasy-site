@@ -1,54 +1,136 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Icon from '../Icon.astro';
 import Pending from '../Pending.astro';
 import { site } from '../../data/site';
 import { reviews } from '../../data/reviews';
+
+const photos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/avaliacoes/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const photoOf = (file?: string) => (file ? photos[`/src/assets/avaliacoes/${file}`]?.default : undefined);
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('');
+
+// Enquanto não houver avaliações, 6 cartões de espaço reservado mostram o formato.
+// Com poucas avaliações, a lista se repete até ter 6 cartões, para a esteira cobrir telas largas sem buraco.
+const base = reviews.length > 0 ? reviews : [null];
+const cards = Array.from({ length: Math.max(6, base.length) }, (_, i) => base[i % base.length]);
 ---
-<section id="avaliacoes" class="bg-mist py-20 sm:py-28" aria-labelledby="aval-title">
+<section id="avaliacoes" class="overflow-hidden bg-mist py-20 sm:py-28" aria-labelledby="aval-title">
   <div class="container-x">
-    <div class="reveal grid gap-8 rounded-[32px] bg-paper p-6 ring-1 ring-ink/[0.05] sm:p-10 md:grid-cols-[1fr_auto] md:items-center lg:p-14">
-      <div>
+    <div class="reveal flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
         <p class="eyebrow">Avaliações</p>
-        <h2 id="aval-title" class="mt-4 text-3xl leading-tight font-semibold sm:text-4xl">O que dizem no Google.</h2>
-        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <span class="font-display text-5xl font-semibold tracking-tight text-ink"><Pending value={site.googleRating} label="nota" /></span>
-          <span class="flex gap-1 text-ink" aria-hidden="true">
-            {Array.from({ length: 5 }).map(() => <Icon name="star" class="size-5" />)}
-          </span>
-          <span class="text-sm text-graphite">
-            <Pending value={site.googleReviewsCount} label="nº de avaliações" /> avaliações
-          </span>
-        </div>
+        <h2 id="aval-title" class="section-title mt-4">Quem comprou, recomenda.</h2>
+        <p class="lead mt-5">Clientes reais contando como foi comprar com a iEasy.</p>
       </div>
       {
         site.googleReviewsUrl ? (
-          <a href={site.googleReviewsUrl} target="_blank" rel="noopener" class="btn btn-primary">
-            Veja nossas avaliações no Google
+          <a href={site.googleReviewsUrl} target="_blank" rel="noopener" class="btn btn-ghost">
+            {site.googleRating && <span class="font-semibold">{site.googleRating}</span>}
+            Ver avaliações no Google
             <Icon name="arrow-up-right" class="size-4" />
           </a>
         ) : (
-          <span class="flex flex-col items-start gap-2">
-            <span class="btn btn-ghost pointer-events-none opacity-70">Veja nossas avaliações no Google</span>
-            <span class="pending">[PREENCHER: link do Google]</span>
-          </span>
+          <span class="pending">[PREENCHER: link do Google]</span>
         )
       }
     </div>
+  </div>
 
-    {
-      reviews.length > 0 && (
-        <ul class="mt-4 grid gap-4 md:grid-cols-3">
-          {reviews.map((r) => (
-            <li class="reveal rounded-[28px] bg-paper p-6 ring-1 ring-ink/[0.05] sm:p-8">
-              <span class="flex gap-0.5 text-ink" role="img" aria-label={`${r.rating} de 5 estrelas`}>
-                {Array.from({ length: r.rating }).map(() => <Icon name="star" class="size-4" />)}
-              </span>
-              <blockquote class="mt-4 leading-relaxed text-graphite">“{r.text}”</blockquote>
-              <p class="mt-5 text-sm font-semibold text-ink">{r.name}</p>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+  <!-- Esteira: a lista aparece duas vezes para o movimento não ter emenda; a cópia fica escondida dos leitores de tela -->
+  <div class="marquee reveal mt-12" role="region" aria-label="Avaliações de clientes" tabindex="0">
+    <div class="marquee-track">
+      {
+        [0, 1].map((copy) => (
+          <ul class="marquee-group" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {cards.map((r) => {
+              const photo = photoOf(r?.photo);
+              return (
+                <li class="flex w-[17.5rem] shrink-0 flex-col rounded-[28px] bg-paper p-6 ring-1 ring-ink/[0.05] sm:w-[22rem] sm:p-7">
+                  {r?.rating ? (
+                    <span class="mb-4 flex gap-0.5 text-ink" role="img" aria-label={`${r.rating} de 5 estrelas`}>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Icon name="star" class:list={['size-4', i < r.rating! ? 'fill-current' : 'opacity-25']} />
+                      ))}
+                    </span>
+                  ) : (
+                    !r && (
+                      <span class="mb-4 flex gap-0.5 text-ink/20" aria-hidden="true">
+                        {Array.from({ length: 5 }).map(() => <Icon name="star" class="size-4" />)}
+                      </span>
+                    )
+                  )}
+                  <blockquote class="flex-1 text-[0.9375rem] leading-relaxed text-graphite">
+                    {r ? `“${r.text}”` : <Pending label="comentário do cliente" />}
+                  </blockquote>
+                  <div class="mt-6 flex items-center gap-3">
+                    {photo ? (
+                      <Image src={photo} alt="" widths={[48, 96]} sizes="48px" class="size-12 shrink-0 rounded-full object-cover" />
+                    ) : (
+                      <span class="grid size-12 shrink-0 place-items-center rounded-full bg-mist text-sm font-semibold text-ink ring-1 ring-ink/[0.06]" aria-hidden="true">
+                        {r ? initials(r.name) : '?'}
+                      </span>
+                    )}
+                    <span class="min-w-0">
+                      <span class="block truncate text-sm font-semibold text-ink">{r ? r.name : <Pending label="nome" />}</span>
+                      {r?.product && <span class="block truncate text-xs text-graphite">Comprou {r.product}</span>}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ))
+      }
+    </div>
   </div>
 </section>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    outline-offset: -2px;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+  }
+  /* para quem quiser ler com calma: passar o mouse, tocar ou focar pausa a esteira */
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track,
+  .marquee:active .marquee-track {
+    animation-play-state: paused;
+  }
+  .marquee-group {
+    display: flex;
+    gap: 1rem;
+    padding-right: 1rem;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  /* sem movimento: vira uma lista que se arrasta para o lado */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      overflow-x: auto;
+      mask-image: none;
+      padding-inline: 1rem;
+    }
+    .marquee-track {
+      animation: none;
+    }
+    .marquee-group[aria-hidden='true'] {
+      display: none;
+    }
+  }
+</style>

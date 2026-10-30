@@ -55,9 +55,9 @@ const year = new Date().getFullYear();
       <div>
         <h2 class="text-sm font-semibold text-paper">Empresa</h2>
         <ul class="mt-4 space-y-3 text-sm">
-          <li><Pending value={site.legalName} label="razão social" /></li>
-          <li>CNPJ <Pending value={site.cnpj} label="CNPJ" /></li>
-          <li class="pt-2 leading-relaxed">Nunca pedimos pagamento por outro número além do {site.whatsapp.display}.</li>
+          {site.legalName && <li>{site.legalName}</li>}
+          {site.cnpj && <li>CNPJ {site.cnpj}</li>}
+          <li class="leading-relaxed">Nunca pedimos pagamento por outro número além do {site.whatsapp.display}.</li>
         </ul>
       </div>
     </div>

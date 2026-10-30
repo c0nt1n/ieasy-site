@@ -12,7 +12,7 @@ export const site = {
     display: '(55) 99138-8746',
   },
 
-  // [PREENCHER] Dados da empresa
+  // Dados da empresa (opcionais: só aparecem no rodapé se preenchidos)
   legalName: '', // razão social
   cnpj: '',
   instagram: 'https://www.instagram.com/ieasy.oficial/',
