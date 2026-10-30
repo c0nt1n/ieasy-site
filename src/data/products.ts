@@ -104,7 +104,25 @@ export const products: Product[] = [
     ],
     inBox: iPhoneBox,
   },
-  { name: 'iPhone Duo', category: 'iphone', description: 'O primeiro iPhone dobrável: 7,6" aberto e 5,4" fechado.', image: '', featured: true },
+  {
+    name: 'iPhone Duo',
+    category: 'iphone',
+    description: 'O primeiro iPhone dobrável: 7,6" aberto e 5,4" fechado.',
+    image: '',
+    featured: true,
+    colors: [
+      { name: 'Branco-estrela', hex: '#e7e3de', image: 'iphone-duo-branco-estrela.webp' },
+      { name: 'Céu noturno', hex: '#2a2e36', image: 'iphone-duo-ceu-noturno.webp' },
+    ],
+    capacities: ['256 GB', '512 GB', '1 TB', '2 TB'],
+    specs: [
+      { label: 'Telas', value: '7,6" dobrável por dentro e 5,4" por fora, até 120 Hz' },
+      { label: 'Chip', value: 'A20 Pro (2 nm)' },
+      { label: 'Câmeras', value: 'Principal e ultra-angular de 48 MP' },
+      { label: 'Estrutura', value: 'Titânio, resistência IP68' },
+    ],
+    inBox: iPhoneBox,
+  },
   {
     name: 'iPhone 17 Pro Max',
     category: 'iphone',
