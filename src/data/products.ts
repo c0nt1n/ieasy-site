@@ -295,18 +295,19 @@ export const products: Product[] = [
   {
     name: 'MacBook Pro',
     category: 'macbook',
-    description: 'Chips M5, M5 Pro ou M5 Max. Telas de 14" e 16".',
+    description: 'Novo chip M6 no 14", além de M5, M5 Pro e M5 Max. Telas de 14" e 16".',
     image: '',
     featured: false,
     colors: [
       { name: 'Preto-espacial', hex: '#2e2e31', image: 'macbook-pro-preto-espacial.webp' },
       { name: 'Prateado', hex: '#e3e4e6', image: 'macbook-pro-prateado.webp' },
     ],
-    capacities: ['14" · M5', '14" · M5 Pro', '14" · M5 Max', '16" · M5 Pro', '16" · M5 Max'],
+    capacities: ['14" · M6', '14" · M5', '14" · M5 Pro', '14" · M5 Max', '16" · M5 Pro', '16" · M5 Max'],
     specs: [
       { label: 'Tela', value: '14,2" ou 16,2" Liquid Retina XDR' },
-      { label: 'Chip', value: 'M5, M5 Pro ou M5 Max' },
-      { label: 'Memória', value: 'Até 128 GB com M5 Max' },
+      { label: 'Chip', value: 'M6 (CPU e GPU de 12 núcleos), M5, M5 Pro ou M5 Max' },
+      { label: 'Memória', value: 'M6: 16 GB, até 32 GB. M5 Max: até 128 GB' },
+      { label: 'Bateria', value: 'Até 24 horas no 14" com M6' },
       { label: 'Conexões', value: 'MagSafe 3, Thunderbolt, HDMI, leitor SDXC e fone 3,5 mm' },
     ],
   },
