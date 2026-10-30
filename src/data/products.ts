@@ -249,7 +249,28 @@ export const products: Product[] = [
   },
 
   // MacBook
-  { name: 'MacBook Neo', category: 'macbook', description: 'A nova opção de MacBook para a rotina.', image: '', featured: true },
+  {
+    name: 'MacBook Neo',
+    category: 'macbook',
+    description: 'A nova opção de MacBook para a rotina.',
+    image: '',
+    featured: true,
+    colors: [
+      { name: 'Prateado', hex: '#e3e4e6', image: 'macbook-neo-prateado.webp' },
+      { name: 'Blush', hex: '#e8c6c8', image: 'macbook-neo-blush.webp' },
+      { name: 'Amarelo-cítrico', hex: '#ece7a0', image: 'macbook-neo-amarelo-citrico.webp' },
+      { name: 'Índigo', hex: '#6b7790', image: 'macbook-neo-indigo.webp' },
+    ],
+    capacities: ['256 GB', '512 GB com Touch ID'],
+    specs: [
+      { label: 'Tela', value: '13" Liquid Retina, 2408 x 1506, até 500 nits' },
+      { label: 'Chip', value: 'A18 Pro: CPU de 6 núcleos e GPU de 5 núcleos' },
+      { label: 'Memória', value: '8 GB' },
+      { label: 'Bateria', value: 'Até 16 horas de vídeo' },
+      { label: 'Peso', value: '1,23 kg' },
+    ],
+    inBox: ['MacBook Neo', 'Adaptador de energia USB-C de 20 W', 'Cabo USB-C'],
+  },
   { name: 'MacBook Air M5', category: 'macbook', description: 'Fino e silencioso, com chip M5. Telas de 13" e 15".', image: '', featured: false },
   { name: 'MacBook Pro', category: 'macbook', description: 'Chips M5, M5 Pro ou M5 Max. Telas de 14" e 16".', image: '', featured: false },
 
