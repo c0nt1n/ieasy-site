@@ -38,6 +38,22 @@ const ipadTrio = [
   { src: ipadBlue, pos: 'trio-1' },
 ];
 
+// Dois estojos no bloco dos AirPods (de trás para a frente)
+import airpods4 from '../../assets/categorias/airpods-4.png';
+import airpodsPro from '../../assets/categorias/airpods-pro-3.png';
+const airpodsDuo = [
+  { src: airpods4, pos: 'duo-2' },
+  { src: airpodsPro, pos: 'duo-1' },
+];
+
+// Dois Apple Watch SE 3 no bloco do Watch (de trás para a frente)
+import watchStarlight from '../../assets/categorias/apple-watch-se-3-estelar.png';
+import watchMidnight from '../../assets/categorias/apple-watch-se-3-meia-noite.png';
+const watchPair = [
+  { src: watchStarlight, pos: 'pair-2' },
+  { src: watchMidnight, pos: 'pair-1' },
+];
+
 // Posição de cada linha na grade bento (desktop: 4 colunas)
 const bento: Record<Category, string> = {
   iphone: 'col-span-2 row-span-2 lg:col-span-2 lg:row-span-2',
@@ -100,6 +116,22 @@ const bento: Record<Category, string> = {
                       </span>
                     ))}
                   </span>
+                ) : c.id === 'airpods' ? (
+                  <span class="pointer-events-none absolute inset-y-0 right-0 w-[58%]" aria-hidden="true">
+                    {airpodsDuo.map((m) => (
+                      <span class:list={['duo-item', m.pos]}>
+                        <Image src={m.src} alt="" widths={[120, 180, 240, 360]} sizes="(min-width: 1024px) 140px, 25vw" quality={92} class="h-full w-auto" />
+                      </span>
+                    ))}
+                  </span>
+                ) : c.id === 'watch' ? (
+                  <span class="pointer-events-none absolute inset-y-0 right-0 w-[58%] lg:w-[46%]" aria-hidden="true">
+                    {watchPair.map((m) => (
+                      <span class:list={['pair-item', m.pos]}>
+                        <Image src={m.src} alt="" widths={[120, 180, 240, 360]} sizes="(min-width: 1024px) 120px, 25vw" quality={92} class="h-full w-auto" />
+                      </span>
+                    ))}
+                  </span>
                 ) : (
                   <DeviceGlyph
                     category={c.id}
@@ -116,9 +148,9 @@ const bento: Record<Category, string> = {
                   <span
                     class:list={[
                       'mt-1 block text-sm',
-                      // no iPad os aparelhos ocupam a metade direita: a frase quebra antes deles,
+                      // no iPad e nos AirPods os aparelhos ocupam a metade direita: a frase quebra antes deles,
                       // e some no bloco estreito do desktop (como já acontece no celular)
-                      c.id === 'ipad' ? 'max-w-[48%] lg:hidden' : 'max-w-[16rem]',
+                      c.id === 'ipad' || c.id === 'airpods' ? 'max-w-[48%] lg:hidden' : c.id === 'watch' ? 'max-w-[48%]' : 'max-w-[16rem]',
                       dark ? 'text-mist' : 'text-graphite',
                       !dark && 'hidden sm:block',
                     ]}
@@ -276,7 +308,72 @@ const bento: Record<Category, string> = {
   .group:hover .trio-3 {
     transform: translate(8%, -3%) rotate(3deg);
   }
+
+  /* Dois estojos de AirPods: o Pro na frente, o AirPods 4 atrás à direita */
+  .duo-item {
+    position: absolute;
+    display: block;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 12px 16px rgb(0 0 0 / 0.14));
+  }
+  .duo-1 {
+    right: 24%;
+    bottom: -10%;
+    height: 62%;
+  }
+  .duo-2 {
+    right: 2%;
+    bottom: 14%;
+    height: 54%;
+  }
+  .group:hover .duo-1 {
+    transform: translate(-6%, -3%) rotate(-4deg);
+  }
+  .group:hover .duo-2 {
+    transform: translate(6%, -4%) rotate(5deg);
+  }
+
+  /* Dois relógios: o meia-noite na frente, o estelar atrás à direita, levemente inclinados */
+  .pair-item {
+    position: absolute;
+    display: block;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 12px 16px rgb(0 0 0 / 0.16));
+  }
+  .pair-1 {
+    right: 30%;
+    bottom: -16%;
+    height: 96%;
+    transform: rotate(-6deg);
+  }
+  .pair-2 {
+    right: 2%;
+    bottom: -2%;
+    height: 84%;
+    transform: rotate(8deg);
+  }
+  /* no celular o bloco é estreito: relógios menores e mais baixos, abaixo do título */
+  @media (max-width: 639px) {
+    .pair-1 {
+      right: 26%;
+      bottom: -12%;
+      height: 54%;
+    }
+    .pair-2 {
+      right: 0;
+      bottom: -4%;
+      height: 46%;
+    }
+  }
+  .group:hover .pair-1 {
+    transform: translate(-6%, -3%) rotate(-9deg);
+  }
+  .group:hover .pair-2 {
+    transform: translate(6%, -3%) rotate(12deg);
+  }
   @media (prefers-reduced-motion: reduce) {
+    .pair-item,
+    .duo-item,
     .trio-item,
     .stack-item,
     .fan-item {

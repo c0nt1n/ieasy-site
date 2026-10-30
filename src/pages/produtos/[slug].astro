@@ -19,19 +19,19 @@ const { product: p } = Astro.props as { product: Product };
 const category = categories.find((c) => c.id === p.category)!;
 const related = productsBy(p.category).filter((o) => o !== p).slice(0, 4);
 
-// Rótulo da escolha de capacidade por linha (AirPods e acessórios não têm)
+// Rótulo da escolha de capacidade por linha (acessórios não têm; nos AirPods, só aparece quando há versões)
 const capacityLabel: Record<Category, string | null> = {
   iphone: 'Armazenamento',
   ipad: 'Armazenamento',
   macbook: 'Configuração',
   watch: 'Tamanho',
-  airpods: null,
+  airpods: 'Versão',
   acessorios: null,
 };
-const capLabel = capacityLabel[p.category];
 
 const colors = p.colors ?? [];
 const caps = p.capacities ?? [];
+const capLabel = p.category === 'airpods' && caps.length === 0 ? null : capacityLabel[p.category];
 const detail = [colors[0]?.name, caps[0]].filter(Boolean).join(', ');
 
 // Uma imagem por cor quando houver fotos; senão, um único espaço reservado
