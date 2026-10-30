@@ -292,7 +292,24 @@ export const products: Product[] = [
       { label: 'Bateria', value: 'Até 18 horas de vídeo' },
     ],
   },
-  { name: 'MacBook Pro', category: 'macbook', description: 'Chips M5, M5 Pro ou M5 Max. Telas de 14" e 16".', image: '', featured: false },
+  {
+    name: 'MacBook Pro',
+    category: 'macbook',
+    description: 'Chips M5, M5 Pro ou M5 Max. Telas de 14" e 16".',
+    image: '',
+    featured: false,
+    colors: [
+      { name: 'Preto-espacial', hex: '#2e2e31', image: 'macbook-pro-preto-espacial.webp' },
+      { name: 'Prateado', hex: '#e3e4e6', image: 'macbook-pro-prateado.webp' },
+    ],
+    capacities: ['14" · M5', '14" · M5 Pro', '14" · M5 Max', '16" · M5 Pro', '16" · M5 Max'],
+    specs: [
+      { label: 'Tela', value: '14,2" ou 16,2" Liquid Retina XDR' },
+      { label: 'Chip', value: 'M5, M5 Pro ou M5 Max' },
+      { label: 'Memória', value: 'Até 128 GB com M5 Max' },
+      { label: 'Conexões', value: 'MagSafe 3, Thunderbolt, HDMI, leitor SDXC e fone 3,5 mm' },
+    ],
+  },
 
   // iPad
   { name: 'iPad 11 (A16)', category: 'ipad', description: 'Tela de 11" e chip A16 para estudo, trabalho e lazer.', image: '', featured: false },
