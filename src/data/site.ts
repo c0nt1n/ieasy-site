@@ -20,7 +20,7 @@ export const site = {
   hoursText: 'Todos os dias, das 8h30 às 22h30',
   // Formato schema.org (usado pelo Google)
   openingHours: ['Mo-Su 08:30-22:30'],
-  warranty: '', // ex.: '90 dias de garantia da loja, além da garantia do fabricante quando aplicável'
+  warranty: 'Todos os aparelhos lacrados têm garantia de 1 ano da própria Apple.',
 
   // [PREENCHER] Quem atende
   attendantName: '',
