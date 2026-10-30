@@ -1,5 +1,7 @@
 ---
 // Página de cada produto: a pessoa escolhe cor e capacidade e chama no WhatsApp com a escolha pronta.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/sections/Header.astro';
 import Footer from '../../components/sections/Footer.astro';
@@ -38,6 +40,17 @@ const detail = [colors[0]?.name, caps[0]].filter(Boolean).join(', ');
 const frames = colors.some((c) => c.image) ? colors.map((c) => ({ color: c.name, file: c.image ?? p.image })) : [{ color: '', file: p.image }];
 const hasPhoto = frames.some((f) => f.file);
 
+// O que a loja confirma antes de fechar: só as escolhas que o produto tem de verdade
+const confirmItems = [colors.length > 1 && 'cor', caps.length > 1 && capLabel?.toLowerCase(), 'disponibilidade'].filter(Boolean) as string[];
+const confirmText =
+  confirmItems.length === 1 ? 'a disponibilidade' : confirmItems.slice(0, -1).join(', ') + ' e ' + confirmItems[confirmItems.length - 1];
+
+// Prévia ao compartilhar o link (WhatsApp, Instagram etc.): foto do produto na primeira cor, em JPG
+const productPhotos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/produtos/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const shareFile = frames.find((f) => f.file)?.file;
+const shareSrc = shareFile ? productPhotos[`/src/assets/produtos/${shareFile}`]?.default : undefined;
+const shareImage = shareSrc ? await getImage({ src: shareSrc, width: 1200, height: 1200, format: 'jpg', quality: 85 }) : undefined;
+
 const home = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
 const breadcrumb = {
   '@context': 'https://schema.org',
@@ -51,7 +64,11 @@ const breadcrumb = {
 
 const perks = ['Original e lacrado', 'Pix ou até 10x sem juros', 'Seu usado na troca', 'Entrega em mãos'];
 ---
-<Layout title={`${p.name} | iEasy`} description={`${p.name} original e lacrado. ${p.description} Veja cores e capacidades e fale com a iEasy no WhatsApp. Entrega em Alphaville, região e São Paulo.`}>
+<Layout
+  title={`${p.name} | iEasy`}
+  description={`${p.name} original e lacrado. ${p.description} Veja as opções e fale com a iEasy no WhatsApp. Entrega em Alphaville, região e São Paulo.`}
+  image={shareImage && { src: new URL(shareImage.src, Astro.site).toString(), width: 1200, height: 1200, alt: `${p.name} na cor ${frames[0].color}` }}
+>
   <Header />
   <main id="conteudo" class="pt-16">
     <div class="container-x pt-6 pb-20 sm:pt-10 sm:pb-28" data-product data-wa={waBase} data-msg={waProductMessage(p.name)}>
@@ -153,7 +170,7 @@ const perks = ['Original e lacrado', 'Pix ou até 10x sem juros', 'Seu usado na 
                 <Icon name="whatsapp" class="size-5" />
                 Quero esse pelo WhatsApp
               </a>
-              <p class="mt-3 text-center text-[0.8125rem] leading-snug text-graphite">Confirmamos cor, capacidade e disponibilidade antes de fechar.</p>
+              <p class="mt-3 text-center text-[0.8125rem] leading-snug text-graphite">Confirmamos {confirmText} antes de fechar.</p>
             </div>
 
             <ul class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm text-graphite">
