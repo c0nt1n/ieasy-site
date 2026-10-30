@@ -18,6 +18,7 @@ export const reviews: Review[] = [
   {
     name: 'Manuela V.',
     rating: 5,
+    product: 'iPhone 17 Pro Max',
     text: 'Desde o primeiro contato fui muito bem atendida, com toda atenção, cuidado e transparência. O celular chegou certinho e superou minhas expectativas! Com certeza voltarei a comprar e indicarei para outras pessoas.',
   },
   {
@@ -29,6 +30,7 @@ export const reviews: Review[] = [
   {
     name: 'Lucas C.',
     rating: 5,
+    product: 'iPhone 16 Pro Max',
     text: 'Chegou o celular. Bem conservado e funcionando. Top!',
   },
 ];

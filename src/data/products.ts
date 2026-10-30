@@ -313,7 +313,27 @@ export const products: Product[] = [
   },
 
   // iPad
-  { name: 'iPad 11 (A16)', category: 'ipad', description: 'Tela de 11" e chip A16 para estudo, trabalho e lazer.', image: '', featured: false },
+  {
+    name: 'iPad 11 (A16)',
+    category: 'ipad',
+    description: 'Tela de 11" e chip A16 para estudo, trabalho e lazer.',
+    image: '',
+    featured: false,
+    colors: [
+      { name: 'Azul', hex: '#8fb4e3', image: 'ipad-11-a16-azul.webp' },
+      { name: 'Rosa', hex: '#e8607e', image: 'ipad-11-a16-rosa.webp' },
+      { name: 'Amarelo', hex: '#ecd463', image: 'ipad-11-a16-amarelo.webp' },
+      { name: 'Prateado', hex: '#e3e4e6', image: 'ipad-11-a16-prateado.webp' },
+    ],
+    capacities: ['128 GB', '256 GB', '512 GB'],
+    specs: [
+      { label: 'Tela', value: '11" Liquid Retina, 2360 x 1640' },
+      { label: 'Chip', value: 'A16' },
+      { label: 'Câmeras', value: '12 MP atrás e 12 MP na frente, na horizontal, com Center Stage' },
+      { label: 'Desbloqueio', value: 'Touch ID no botão superior' },
+      { label: 'Conexões', value: 'USB-C, Wi-Fi 6 ou Wi-Fi + Cellular (5G)' },
+    ],
+  },
 
   // AirPods
   { name: 'AirPods Pro 3', category: 'airpods', description: 'Cancelamento de ruído e ajuste in-ear.', image: '', featured: true, colors: [{ name: 'Branco', hex: '#f4f4f1' }] },

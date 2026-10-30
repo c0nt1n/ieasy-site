@@ -28,6 +28,16 @@ const macStack = [
   { src: macCitrus, pos: 'stack-1' },
 ];
 
+// Trio de iPads no bloco do iPad (de trás para a frente)
+import ipadYellow from '../../assets/categorias/ipad-11-a16-amarelo.png';
+import ipadPink from '../../assets/categorias/ipad-11-a16-rosa.png';
+import ipadBlue from '../../assets/categorias/ipad-11-a16-azul.png';
+const ipadTrio = [
+  { src: ipadYellow, pos: 'trio-3' },
+  { src: ipadPink, pos: 'trio-2' },
+  { src: ipadBlue, pos: 'trio-1' },
+];
+
 // Posição de cada linha na grade bento (desktop: 4 colunas)
 const bento: Record<Category, string> = {
   iphone: 'col-span-2 row-span-2 lg:col-span-2 lg:row-span-2',
@@ -82,6 +92,14 @@ const bento: Record<Category, string> = {
                       </span>
                     ))}
                   </span>
+                ) : c.id === 'ipad' ? (
+                  <span class="pointer-events-none absolute inset-y-0 right-0 w-[58%]" aria-hidden="true">
+                    {ipadTrio.map((m) => (
+                      <span class:list={['trio-item', m.pos]}>
+                        <Image src={m.src} alt="" widths={[120, 180, 240, 360]} sizes="(min-width: 1024px) 120px, 25vw" quality={92} class="h-full w-auto" />
+                      </span>
+                    ))}
+                  </span>
                 ) : (
                   <DeviceGlyph
                     category={c.id}
@@ -95,7 +113,16 @@ const bento: Record<Category, string> = {
                   <span class:list={['block font-display font-semibold tracking-tight', dark ? 'text-3xl text-paper sm:text-5xl' : 'text-xl sm:text-2xl']}>
                     {c.name}
                   </span>
-                  <span class:list={['mt-1 block max-w-[16rem] text-sm', dark ? 'text-mist' : 'text-graphite', !dark && 'hidden sm:block']}>
+                  <span
+                    class:list={[
+                      'mt-1 block text-sm',
+                      // no iPad os aparelhos ocupam a metade direita: a frase quebra antes deles,
+                      // e some no bloco estreito do desktop (como já acontece no celular)
+                      c.id === 'ipad' ? 'max-w-[48%] lg:hidden' : 'max-w-[16rem]',
+                      dark ? 'text-mist' : 'text-graphite',
+                      !dark && 'hidden sm:block',
+                    ]}
+                  >
                     {c.tagline}
                   </span>
                   <span
@@ -220,7 +247,37 @@ const bento: Record<Category, string> = {
   .group:hover .stack-4 {
     transform: translate(8%, -4%);
   }
+
+  /* Trio de iPads: o azul na frente, rosa e amarelo atrás, subindo para a direita */
+  .trio-item {
+    position: absolute;
+    display: block;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 12px 16px rgb(0 0 0 / 0.16));
+  }
+  .trio-1 {
+    right: 34%;
+    bottom: -12%;
+    height: 82%;
+  }
+  .trio-2 {
+    right: 16%;
+    bottom: -4%;
+    height: 78%;
+  }
+  .trio-3 {
+    right: -2%;
+    bottom: 4%;
+    height: 74%;
+  }
+  .group:hover .trio-1 {
+    transform: translate(-10%, -2%) rotate(-3deg);
+  }
+  .group:hover .trio-3 {
+    transform: translate(8%, -3%) rotate(3deg);
+  }
   @media (prefers-reduced-motion: reduce) {
+    .trio-item,
     .stack-item,
     .fan-item {
       transition: none;

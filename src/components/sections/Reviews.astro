@@ -54,7 +54,7 @@ const cards = Array.from({ length: Math.max(6, base.length) }, (_, i) => base[i 
               return (
                 <li class="flex w-[17.5rem] shrink-0 flex-col rounded-[28px] bg-paper p-6 ring-1 ring-ink/[0.05] sm:w-[22rem] sm:p-7">
                   {r?.rating ? (
-                    <span class="mb-4 flex gap-0.5 text-ink" role="img" aria-label={`${r.rating} de 5 estrelas`}>
+                    <span class="mb-4 flex gap-0.5 text-[#f5b301]" role="img" aria-label={`${r.rating} de 5 estrelas`}>
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Icon name="star" class:list={['size-4', i < r.rating! ? 'fill-current' : 'opacity-25']} />
                       ))}
