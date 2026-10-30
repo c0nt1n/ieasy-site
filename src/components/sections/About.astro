@@ -2,51 +2,64 @@
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Icon from '../Icon.astro';
-import Pending from '../Pending.astro';
 import { site, hoursInline, waGeneral } from '../../data/site';
 
 const photos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/equipe/*.{jpg,jpeg,png,webp,avif}', { eager: true });
-const photo = site.attendantPhoto ? photos[`/src/assets/equipe/${site.attendantPhoto}`] : undefined;
+const founders = site.founders.map((f) => ({
+  ...f,
+  image: f.photo ? photos[`/src/assets/equipe/${f.photo}`]?.default : undefined,
+  initials: f.name
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter((_, i, all) => i === 0 || i === all.length - 1)
+    .map((w) => w[0].toUpperCase())
+    .join(''),
+}));
 ---
 <section id="quem-somos" class="py-20 sm:py-28" aria-labelledby="sobre-title">
-  <div class="container-x grid items-center gap-10 md:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-    <figure class="reveal mx-auto w-full max-w-sm">
-      <div class="relative aspect-[4/5] overflow-hidden rounded-[32px] bg-mist">
-        {
-          photo ? (
-            <Picture
-              src={photo.default}
-              alt={site.attendantName ? `Foto de ${site.attendantName}` : 'Foto de quem atende na iEasy'}
-              formats={['avif', 'webp']}
-              widths={[360, 540, 720]}
-              sizes="(min-width: 768px) 384px, 90vw"
-              loading="lazy"
-              class="h-full w-full object-cover"
-            />
-          ) : (
-            <div class="dot-grid absolute inset-0 grid place-items-center">
-              <div class="text-center">
-                <Icon name="user" class="mx-auto size-16 text-steel" strokeWidth={1.2} />
-                <p class="mt-3"><span class="pending">[PREENCHER: foto]</span></p>
+  <div class="container-x grid items-center gap-10 md:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+    <!-- Os dois sócios lado a lado; sem foto, aparecem as iniciais -->
+    <ul class="reveal mx-auto grid w-full max-w-md grid-cols-2 gap-3 sm:gap-4">
+      {
+        founders.map((f) => (
+          <li>
+            <figure>
+              <div class="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-mist">
+                {f.image ? (
+                  <Picture
+                    src={f.image}
+                    alt={`Foto de ${f.name}`}
+                    formats={['avif', 'webp']}
+                    widths={[240, 360, 540]}
+                    sizes="(min-width: 768px) 210px, 45vw"
+                    loading="lazy"
+                    class="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div class="dot-grid absolute inset-0 grid place-items-center" aria-hidden="true">
+                    <span class="font-display text-5xl font-semibold tracking-tight text-steel sm:text-6xl">{f.initials}</span>
+                  </div>
+                )}
               </div>
-            </div>
-          )
-        }
-      </div>
-      <figcaption class="mt-4 flex items-center justify-between gap-4 px-1">
-        <span>
-          <span class="block font-display text-lg font-semibold text-ink"><Pending value={site.attendantName} label="nome" /></span>
-          <span class="block text-sm text-graphite"><Pending value={site.attendantRole} label="função" /></span>
-        </span>
-      </figcaption>
-    </figure>
+              <figcaption class="mt-3 px-1">
+                <span class="block font-display text-base leading-snug font-semibold text-ink sm:text-lg">{f.name}</span>
+                <span class="block text-sm text-graphite">{f.role}</span>
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
 
     <div class="reveal">
       <p class="eyebrow">Quem somos</p>
       <h2 id="sobre-title" class="section-title mt-4">Atendimento próximo, do primeiro contato à entrega.</h2>
       <div class="lead mt-6 space-y-4">
         <p>
-          Na iEasy, comprar produtos Apple é simples: conversa direta pelo WhatsApp, informação clara sobre cada aparelho e entrega em mãos, no local e horário combinados.
+          A iEasy é dos sócios {founders.map((f) => f.short).join(' e ')}, que cuidam de cada atendimento.
+        </p>
+        <p>
+          Comprar produtos Apple aqui é simples: conversa direta pelo WhatsApp, informação clara sobre cada aparelho e entrega em mãos, no local e horário combinados.
         </p>
         <p>
           Atendemos {hoursInline}.

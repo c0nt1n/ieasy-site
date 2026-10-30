@@ -22,10 +22,12 @@ export const site = {
   openingHours: ['Mo-Su 08:30-22:30'],
   warranty: 'Todos os aparelhos lacrados têm garantia de 1 ano da própria Apple.',
 
-  // [PREENCHER] Quem atende
-  attendantName: '',
-  attendantRole: '', // ex.: 'Fundador e consultor'
-  attendantPhoto: '', // nome do arquivo em src/assets/equipe/, ex.: 'foto.jpg'
+  // Sócios (seção Quem somos). Foto: arquivo em src/assets/equipe/, ex.: 'luigi.jpg'; sem foto, aparecem as iniciais.
+  // `short` é como o nome aparece no texto da seção.
+  founders: [
+    { name: 'Luigi Contin', short: 'Luigi', role: 'Sócio-fundador', photo: '' },
+    { name: 'João Pedro Lorentziadis', short: 'João Pedro', role: 'Sócio-fundador', photo: '' },
+  ],
 
   // [PREENCHER] Avaliações no Google
   googleReviewsUrl: 'https://share.google/bHMFhUgTL2cvFjG26',
