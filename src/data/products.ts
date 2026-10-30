@@ -405,7 +405,25 @@ export const products: Product[] = [
 
   // Apple Watch
   { name: 'Apple Watch Series 12', category: 'watch', description: 'O relógio completo para saúde e rotina.', image: '', featured: false },
-  { name: 'Apple Watch Ultra 4', category: 'watch', description: 'Robusto, para esporte e aventura.', image: '', featured: true },
+  {
+    name: 'Apple Watch Ultra 4',
+    category: 'watch',
+    description: 'Robusto, para esporte e aventura.',
+    image: '',
+    featured: true,
+    colors: [
+      { name: 'Titânio natural', hex: '#c9c2b6', image: 'apple-watch-ultra-4-titanio-natural.webp' },
+      { name: 'Titânio preto', hex: '#2c2c2e', image: 'apple-watch-ultra-4-titanio-preto.webp' },
+    ],
+    capacities: ['49 mm'],
+    specs: [
+      { label: 'Chip', value: 'S11' },
+      { label: 'Tela', value: 'Até 3000 nits de brilho' },
+      { label: 'Bateria', value: 'Até 50 horas (até 84 horas no modo Pouca Energia)' },
+      { label: 'Resistência', value: 'WR100 e IP6X, para mergulho recreativo até 40 m' },
+      { label: 'Caixa', value: 'Titânio, com GPS + Celular' },
+    ],
+  },
   {
     name: 'Apple Watch SE 3',
     category: 'watch',
