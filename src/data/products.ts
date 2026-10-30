@@ -271,7 +271,27 @@ export const products: Product[] = [
     ],
     inBox: ['MacBook Neo', 'Adaptador de energia USB-C de 20 W', 'Cabo USB-C'],
   },
-  { name: 'MacBook Air M5', category: 'macbook', description: 'Fino e silencioso, com chip M5. Telas de 13" e 15".', image: '', featured: false },
+  {
+    name: 'MacBook Air M5',
+    category: 'macbook',
+    description: 'Fino e silencioso, com chip M5. Telas de 13" e 15".',
+    image: '',
+    featured: false,
+    colors: [
+      { name: 'Azul-céu', hex: '#c5d8e6', image: 'macbook-air-m5-azul-ceu.webp' },
+      { name: 'Prateado', hex: '#e3e4e6', image: 'macbook-air-m5-prateado.webp' },
+      { name: 'Estelar', hex: '#e3dccf', image: 'macbook-air-m5-estelar.webp' },
+      { name: 'Meia-noite', hex: '#2e3642', image: 'macbook-air-m5-meia-noite.webp' },
+    ],
+    capacities: ['13" · 512 GB', '13" · 1 TB', '15" · 512 GB', '15" · 1 TB'],
+    specs: [
+      { label: 'Tela', value: '13" (2560 x 1664) ou 15" (2880 x 1864) Liquid Retina, 500 nits' },
+      { label: 'Chip', value: 'M5: CPU de 10 núcleos, GPU de 8 ou 10 núcleos' },
+      { label: 'Memória', value: '16 GB ou 24 GB' },
+      { label: 'Conexões', value: 'MagSafe 3, duas Thunderbolt 4, fone 3,5 mm, Wi-Fi 7' },
+      { label: 'Bateria', value: 'Até 18 horas de vídeo' },
+    ],
+  },
   { name: 'MacBook Pro', category: 'macbook', description: 'Chips M5, M5 Pro ou M5 Max. Telas de 14" e 16".', image: '', featured: false },
 
   // iPad
