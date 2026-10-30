@@ -404,7 +404,26 @@ export const products: Product[] = [
   },
 
   // Apple Watch
-  { name: 'Apple Watch Series 12', category: 'watch', description: 'O relógio completo para saúde e rotina.', image: '', featured: false },
+  {
+    name: 'Apple Watch Series 12',
+    category: 'watch',
+    description: 'O relógio completo para saúde e rotina.',
+    image: '',
+    featured: false,
+    colors: [
+      { name: 'Dourado-claro', hex: '#e8dcc6', image: 'apple-watch-series-12-dourado-claro.webp' },
+      { name: 'Titânio natural', hex: '#bdb6aa', image: 'apple-watch-series-12-titanio-natural.webp' },
+      { name: 'Bronze-escuro', hex: '#a87a4e', image: 'apple-watch-series-12-bronze-escuro.webp' },
+    ],
+    capacities: ['42 mm', '46 mm'],
+    specs: [
+      { label: 'Chip', value: 'S11' },
+      { label: 'Tela', value: 'Até 2000 nits de brilho' },
+      { label: 'Saúde', value: 'Novo sistema de sensores de saúde' },
+      { label: 'Bateria', value: 'Até 24 horas (até 38 horas no modo Pouca Energia)' },
+      { label: 'Caixa', value: 'Alumínio ou titânio, com GPS ou GPS + Celular' },
+    ],
+  },
   {
     name: 'Apple Watch Ultra 4',
     category: 'watch',
@@ -444,7 +463,20 @@ export const products: Product[] = [
   },
 
   // Acessórios
-  { name: 'AirTag (kit com 4)', category: 'acessorios', description: 'Encontre chaves, malas e bolsas pelo iPhone.', image: '', featured: false, colors: [{ name: 'Branco', hex: '#f4f4f1' }] },
+  {
+    name: 'AirTag (kit com 4)',
+    category: 'acessorios',
+    description: 'Encontre chaves, malas e bolsas pelo iPhone.',
+    image: '',
+    featured: false,
+    colors: [{ name: 'Branco', hex: '#f4f4f1', image: 'airtag-kit-com-4.webp' }],
+    specs: [
+      { label: 'Localização', value: 'App Buscar, com Busca Precisa no iPhone' },
+      { label: 'Resistência', value: 'IP67, contra água e poeira' },
+      { label: 'Bateria', value: 'Substituível, dura mais de um ano' },
+      { label: 'No kit', value: '4 AirTags' },
+    ],
+  },
 ];
 
 export function productsBy(category: Category) {

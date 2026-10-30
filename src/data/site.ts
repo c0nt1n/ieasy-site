@@ -28,7 +28,7 @@ export const site = {
   attendantPhoto: '', // nome do arquivo em src/assets/equipe/, ex.: 'foto.jpg'
 
   // [PREENCHER] Avaliações no Google
-  googleReviewsUrl: '',
+  googleReviewsUrl: 'https://share.google/bHMFhUgTL2cvFjG26',
   googleRating: '', // ex.: '4,9'
   googleReviewsCount: '', // ex.: '120'
 
