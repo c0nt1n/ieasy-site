@@ -28,7 +28,7 @@ export const site = {
     { name: 'João Pedro Lorentziadis', short: 'João Pedro' },
   ],
   // Foto dos dois juntos: arquivo em src/assets/equipe/, ex.: 'socios.jpg'. Sem foto, aparecem as iniciais.
-  foundersPhoto: '',
+  foundersPhoto: 'socios.jpg',
 
   // [PREENCHER] Avaliações no Google
   googleReviewsUrl: 'https://share.google/bHMFhUgTL2cvFjG26',

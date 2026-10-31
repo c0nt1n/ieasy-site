@@ -18,14 +18,14 @@ const initials = (name: string) =>
   <div class="container-x grid items-center gap-10 md:grid-cols-[0.9fr_1.1fr] lg:gap-20">
     <!-- Foto dos dois sócios juntos; sem foto, aparecem as iniciais -->
     <figure class="reveal mx-auto w-full max-w-md">
-      <div class="relative aspect-square overflow-hidden rounded-[32px] bg-mist">
+      <div class:list={['relative overflow-hidden rounded-[32px] bg-mist', photo ? 'aspect-[3/4]' : 'aspect-square']}>
         {
           photo ? (
             <Picture
               src={photo}
               alt={`Foto de ${names}`}
               formats={['avif', 'webp']}
-              widths={[360, 540, 720, 960]}
+              widths={[360, 540, 720, 960, 1140]}
               sizes="(min-width: 768px) 448px, 90vw"
               loading="lazy"
               class="h-full w-full object-cover"
