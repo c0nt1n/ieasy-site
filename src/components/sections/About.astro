@@ -13,6 +13,12 @@ const initials = (name: string) =>
     .filter((_, i, all) => i === 0 || i === all.length - 1)
     .map((w) => w[0].toUpperCase())
     .join('');
+
+const points = [
+  { icon: 'chat', title: 'Direto com os sócios', text: 'Do primeiro “oi” no WhatsApp ao pós-venda, somos nós que cuidamos do seu atendimento.' },
+  { icon: 'map-pin', title: 'Entrega em mãos', text: 'No local e horário combinados, em Alphaville e região.' },
+  { icon: 'clock', title: 'Todos os dias', text: `Atendemos ${hoursInline}.` },
+] as const;
 ---
 <section id="quem-somos" class="py-20 sm:py-28" aria-labelledby="sobre-title">
   <div class="container-x grid items-center gap-10 md:grid-cols-[0.9fr_1.1fr] lg:gap-20">
@@ -57,20 +63,27 @@ const initials = (name: string) =>
     <div class="reveal">
       <p class="eyebrow">Quem somos</p>
       <h2 id="sobre-title" class="section-title mt-4">Atendimento próximo, do primeiro contato à entrega.</h2>
-      <div class="lead mt-6 space-y-4">
-        <p>
-          A iEasy é dos sócios {site.founders.map((f) => f.short).join(' e ')}, que cuidam de cada atendimento.
-        </p>
-        <p>
-          Comprar produtos Apple aqui é simples: conversa direta pelo WhatsApp, informação clara sobre cada aparelho e entrega em mãos, no local e horário combinados.
-        </p>
-        <p>
-          Atendemos {hoursInline}.
-        </p>
-      </div>
+      <p class="lead mt-6">
+        Somos {site.founders.map((f) => f.short).join(' e ')}, sócios-fundadores da iEasy. Comprar Apple com a gente é simples: você conversa, tira as dúvidas e recebe o aparelho original e lacrado em mãos.
+      </p>
+
+      <ul class="mt-8 divide-y divide-ink/[0.08] border-y border-ink/[0.08]">
+        {points.map((pt) => (
+          <li class="flex items-start gap-4 py-4">
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-mist text-ink">
+              <Icon name={pt.icon} class="size-5" />
+            </span>
+            <span>
+              <span class="block font-semibold text-ink">{pt.title}</span>
+              <span class="mt-0.5 block text-[0.9375rem] leading-relaxed text-graphite">{pt.text}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+
       <a href={waGeneral()} target="_blank" rel="noopener" class="btn btn-primary mt-8">
         <Icon name="whatsapp" class="size-5" />
-        Falar com a equipe
+        Falar com a gente
       </a>
     </div>
   </div>
