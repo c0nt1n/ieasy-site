@@ -62,11 +62,15 @@ jobs:
         env:
           SITE_URL: https://ieasyoficial.com
           BASE_PATH: /
-      # Envia só o que mudou desde o último envio
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      # Envia só o que mudou desde o último envio, com a conexão criptografada (FTPS).
+      # "loose": o certificado da Hostinger é de *.hstgr.io, não do IP, então o nome não é conferido.
+      # travado no commit exato da v4.3.5 (não muda sozinho se a ferramenta for alterada)
+      - uses: SamKirkland/FTP-Deploy-Action@8e83cea8672e3fbcbb9fdafff34debf6ae4c5f65
         with:
           server: ${{ vars.FTP_SERVER }}
           username: ${{ vars.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: loose
           local-dir: ./dist/
           server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
