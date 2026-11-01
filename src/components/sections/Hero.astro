@@ -4,7 +4,7 @@ import LogoMark from '../LogoMark.astro';
 import { hoursInline, waGeneral } from '../../data/site';
 import { products } from '../../data/products';
 
-const title = 'Produtos Apple originais e lacrados, com entrega em Alphaville e região.';
+const title = 'Produtos Apple originais e lacrados.';
 const words = title.split(' ');
 // a sequência de entrada continua depois do título
 const after = words.length;
@@ -15,7 +15,7 @@ const after = words.length;
 
   <div class="container-x relative grid items-center gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-8">
     <div class="max-w-2xl">
-      <p class="intro eyebrow" style="--i:0">Alphaville, região e São Paulo</p>
+      <p class="intro eyebrow" style="--i:0">Alphaville · São Paulo</p>
       <h1 id="hero-title" class="mt-5 text-[2.5rem] leading-[1.02] font-semibold sm:text-6xl lg:text-[4rem]">
         {words.map((w, i) => (
           <>
@@ -24,12 +24,12 @@ const after = words.length;
         ))}
       </h1>
       <p class="intro lead mt-6 max-w-xl" style={`--i:${after}`}>
-        Condições competitivas, Pix ou até 10x sem juros e um atendimento próximo, do primeiro contato até a entrega em mãos.
+        Garantia de 1 ano da Apple, Pix ou até 10x sem juros e entrega em mãos em Alphaville e região.
       </p>
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">
         <a href={waGeneral()} target="_blank" rel="noopener" class="intro btn btn-primary min-h-14 px-7 text-base" style={`--i:${after + 2}`}>
           <Icon name="whatsapp" class="size-5" />
-          Falar no WhatsApp
+          Consultar preço no WhatsApp
         </a>
         <a href="#produtos" class="intro btn btn-ghost min-h-14 px-7 text-base" style={`--i:${after + 3}`}>
           Ver produtos
