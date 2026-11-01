@@ -43,9 +43,9 @@ São gerados automaticamente a partir do número em `site.ts`:
 - Botões gerais: "Oi! Vim pelo site e tenho interesse em: "
 - Botão de cada produto: "Oi! Vim pelo site e tenho interesse no (nome do produto)"
 
-## Prévia no GitHub Pages
+## Antigo endereço de prévia
 
-Cada envio para a branch `main` publica uma prévia em **https://c0nt1n.github.io/ieasy-site/** (workflow em `.github/workflows/deploy.yml`).
+A prévia em `https://c0nt1n.github.io/ieasy-site/` foi desligada. O GitHub Pages agora só redireciona os links antigos para a mesma página em ieasyoficial.com (`.github/pages-redirect/index.html`).
 
 ## Site oficial na Hostinger (ieasyoficial.com)
 

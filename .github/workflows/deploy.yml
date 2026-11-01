@@ -1,9 +1,10 @@
 # Publica o site a cada envio para a branch main:
-# - prévia no GitHub Pages (Settings → Pages → Source: GitHub Actions);
-# - site oficial na Hostinger (ieasyoficial.com), por FTP. Esse envio só roda depois de
-#   configurar em Settings → Secrets and variables → Actions:
+# - site oficial na Hostinger (ieasyoficial.com), por FTP. Configuração em
+#   Settings → Secrets and variables → Actions:
 #     Variables: FTP_SERVER, FTP_USERNAME (e FTP_DIR, se a pasta não for public_html/)
 #     Secrets:   FTP_PASSWORD
+# - no GitHub Pages fica só um redirecionamento: links antigos da prévia
+#   (c0nt1n.github.io/ieasy-site/...) levam para a mesma página em ieasyoficial.com.
 name: Publicar o site
 
 on:
@@ -16,27 +17,21 @@ permissions:
   pages: write
   id-token: write
 
+# um envio por vez, sem interromper um envio para a Hostinger no meio
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-        env:
-          SITE_URL: https://${{ github.repository_owner }}.github.io
-          BASE_PATH: /${{ github.event.repository.name }}
+      # a mesma página serve para o endereço inicial e para qualquer outro (404.html)
+      - run: mkdir redirect && cp .github/pages-redirect/index.html redirect/index.html && cp .github/pages-redirect/index.html redirect/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: redirect
 
   deploy:
     needs: build
