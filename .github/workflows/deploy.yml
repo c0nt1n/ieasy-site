@@ -62,15 +62,25 @@ jobs:
         env:
           SITE_URL: https://ieasyoficial.com
           BASE_PATH: /
-      # Envia só o que mudou desde o último envio, com a conexão criptografada (FTPS).
-      # "loose": o certificado da Hostinger é de *.hstgr.io, não do IP, então o nome não é conferido.
-      # travado no commit exato da v4.3.5 (não muda sozinho se a ferramenta for alterada)
-      - uses: SamKirkland/FTP-Deploy-Action@8e83cea8672e3fbcbb9fdafff34debf6ae4c5f65
-        with:
-          server: ${{ vars.FTP_SERVER }}
-          username: ${{ vars.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          security: loose
-          local-dir: ./dist/
-          server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
+      # Envia com o lftp do Ubuntu, com a conexão criptografada (FTPS).
+      # ssl:verify-certificate no: o certificado da Hostinger é de *.hstgr.io, não do IP, então o nome
+      # não é conferido (a conexão continua criptografada).
+      # 1) arquivos novos de /_astro/ (nomes mudam a cada versão); 2) páginas e demais arquivos;
+      # 3) por último, apaga de /_astro/ o que a versão nova não usa mais.
+      - name: Enviar para a Hostinger
+        env:
+          FTP_SERVER: ${{ vars.FTP_SERVER }}
+          FTP_USERNAME: ${{ vars.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_DIR: ${{ vars.FTP_DIR || 'public_html/' }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp > /dev/null
+          lftp -c "
+            set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no;
+            set net:max-retries 3; set net:timeout 30;
+            open --env-password -u \"$FTP_USERNAME\" \"$FTP_SERVER\";
+            cd \"$FTP_DIR\";
+            mirror -R --ignore-time --parallel=4 dist/_astro/ _astro/;
+            mirror -R --exclude-glob _astro/ --parallel=4 dist/ ./;
+            mirror -R --ignore-time --delete --parallel=4 dist/_astro/ _astro/;
+          "
