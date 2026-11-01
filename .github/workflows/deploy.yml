@@ -1,6 +1,10 @@
-# Publica o site no GitHub Pages a cada envio para a branch main.
-# Para ativar: Settings → Pages → Source: GitHub Actions.
-name: Publicar no GitHub Pages
+# Publica o site a cada envio para a branch main:
+# - prévia no GitHub Pages (Settings → Pages → Source: GitHub Actions);
+# - site oficial na Hostinger (ieasyoficial.com), por FTP. Esse envio só roda depois de
+#   configurar em Settings → Secrets and variables → Actions:
+#     Variables: FTP_SERVER, FTP_USERNAME (e FTP_DIR, se a pasta não for public_html/)
+#     Secrets:   FTP_PASSWORD
+name: Publicar o site
 
 on:
   push:
@@ -43,3 +47,26 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  hostinger:
+    if: vars.FTP_SERVER != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          SITE_URL: https://ieasyoficial.com
+          BASE_PATH: /
+      # Envia só o que mudou desde o último envio
+      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ vars.FTP_SERVER }}
+          username: ${{ vars.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
